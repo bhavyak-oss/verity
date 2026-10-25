@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Verity: notes that check, source and teach</title>
+<meta name="description" content="Verity is a private notes app with three AI tools built in: a fact checker, a parts-sourcing advisor and a flashcard coach. Free, in your browser, no account.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%20role='img'%20aria-label='Verity'%3E%3Cdefs%3E%3ClinearGradient%20id='vbg'%20x1='6'%20y1='2'%20x2='58'%20y2='64'%20gradientUnits='userSpaceOnUse'%3E%3Cstop%20offset='0'%20stop-color='%236f8dff'/%3E%3Cstop%20offset='.55'%20stop-color='%233d5be0'/%3E%3Cstop%20offset='1'%20stop-color='%237a4ee6'/%3E%3C/linearGradient%3E%3ClinearGradient%20id='vck'%20x1='20'%20y1='26'%20x2='46'%20y2='46'%20gradientUnits='userSpaceOnUse'%3E%3Cstop%20offset='0'%20stop-color='%2314b88c'/%3E%3Cstop%20offset='1'%20stop-color='%232f6be0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width='64'%20height='64'%20rx='16'%20fill='url(%23vbg)'/%3E%20%20%3Cpath%20d='M19%2012h18.5L48%2022.5V49a3.5%203.5%200%200%201-3.5%203.5h-25A3.5%203.5%200%200%201%2016%2049V15.5A3.5%203.5%200%200%201%2019.500%2012z'%20fill='%23fff'/%3E%3Cpath%20d='M37.500%2012%2048%2022.500H41a3.500%203.500%200%200%201-3.500-3.500z'%20fill='%23c9d4ff'/%3E%20%20%3Cpath%20d='M22.500%2033%2029.500%2040.500l12-12.500'%20fill='none'%20stroke='url(%23vck)'%20stroke-width='6'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%20%20%3Crect%20x='22'%20y='45'%20width='15'%20height='2.600'%20rx='1.300'%20fill='%23c9d4ff'/%3E%20%20%3Cpath%20d='M51%206.500l1.500%203.500%203.500%201.500-3.500%201.500L51%2016.500%2049.500%2013%2046%2011.500%2049.500%2010z'%20fill='%23ffd36b'/%3E%3C/svg%3E" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css?v=34">
+<script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+<div class="fx-prog" aria-hidden="true"></div>
+<header class="wrap nav">
+  <a class="logo" href="index.html"><svg class="vlogo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="28" height="28" aria-hidden="true" focusable="false"><defs><linearGradient id='vbg' x1='6' y1='2' x2='58' y2='64' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='#6f8dff'/><stop offset='.55' stop-color='#3d5be0'/><stop offset='1' stop-color='#7a4ee6'/></linearGradient><linearGradient id='vck' x1='20' y1='26' x2='46' y2='46' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='#14b88c'/><stop offset='1' stop-color='#2f6be0'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(#vbg)'/>  <path d='M19 12h18.5L48 22.5V49a3.5 3.5 0 0 1-3.5 3.5h-25A3.5 3.5 0 0 1 16 49V15.5A3.5 3.5 0 0 1 19.500 12z' fill='#fff'/><path d='M37.500 12 48 22.500H41a3.500 3.500 0 0 1-3.500-3.500z' fill='#c9d4ff'/>  <path d='M22.500 33 29.500 40.500l12-12.500' fill='none' stroke='url(#vck)' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/>  <rect x='22' y='45' width='15' height='2.600' rx='1.300' fill='#c9d4ff'/>  <path d='M51 6.500l1.500 3.500 3.500 1.500-3.500 1.500L51 16.500 49.500 13 46 11.500 49.500 10z' fill='#ffd36b'/></svg>Verity</a>
+  <nav aria-label="Main">
+    <a href="#fact">Fact checker</a>
+    <a href="#sourcing">Sourcing advisor</a>
+    <a href="#study">Study</a>
+    <a href="#map">Knowledge map</a>
+    <a href="#privacy">Privacy</a>
+    <a href="#faq">Questions</a>
+    <a href="ask">Ask documents</a>
+    <a class="btn small" href="app.html">Open Verity</a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="wrap hero-in">
+      <p class="eyebrow-pill"><span>✦</span> Three AI tools · private notes · free</p>
+      <h1>Write it down.<br><span class="grad">Check it. Source it. Learn it.</span></h1>
+      <p class="lead">A notes app with a fact-checker, a sourcing advisor and a flashcard coach built in.</p>
+      <div class="cta-row">
+        <a class="btn big" href="app.html">Open Verity, it’s free</a>
+        <a class="btn ghost big" href="#tools">See the three tools ↓</a>
+      </div>
+
+      <div class="demo" id="demo" aria-label="Live demo of the Verity command box">
+        <div class="demo-bar" aria-hidden="true"><span class="spark">✦</span><span class="demo-type" id="demoType"></span><span class="caret"></span><span class="demo-go">Go ↵</span></div>
+        <div class="demo-routes" id="demoRoutes" role="tablist" aria-label="Pick a tool to preview">
+          <button type="button" role="tab" data-d="0" class="rt rt-fact"><i><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8 7.5 9.5 4.4-1.5 7.5-4.9 7.5-9.5V6z"/><path d="m8.6 12 2.4 2.4 4.5-4.8"/></svg></i>Fact check</button>
+          <button type="button" role="tab" data-d="1" class="rt rt-src"><i><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.2v9.6L12 21l-8-4.2V7.2z"/><path d="m4 7.2 8 4.3 8-4.3M12 11.5V21"/></svg></i>Sourcing advisor</button>
+          <button type="button" role="tab" data-d="2" class="rt rt-stu"><i><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-4.5L21 9l-9 4.5z"/><path d="M7 11.2v4.3c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-4.3M21 9v5"/></svg></i>Study</button>
+        </div>
+        <div class="demo-stage">
+          <div class="pane p-fact" data-p="0">
+            <div class="pane-head"><b>Fact check · text</b><span>4 claims found</span></div>
+            <div class="vbar"><i class="t" style="--w:50%"></i><i class="f" style="--w:25%"></i><i class="s" style="--w:25%"></i></div>
+            <ol class="claims">
+              <li style="--i:0"><em class="f">False</em>The Great Wall is visible from space with the naked eye.</li>
+              <li style="--i:1"><em class="t">True</em>The Great Wall is over 20,000 km long in total.</li>
+              <li style="--i:2"><em class="t">True</em>Parts of it date back more than 2,000 years.</li>
+              <li style="--i:3"><em class="s">Opinion</em>It is the greatest wonder of the world.</li>
+            </ol>
+          </div>
+          <div class="pane p-src" data-p="1">
+            <div class="pane-head"><b>Smart watch · 4 parts</b><span class="big-total">₹<span data-count="1292">1,292</span> <small>per unit</small></span></div>
+            <div class="rows">
+              <div class="srow" style="--i:0"><span>Display, OLED</span><span class="seller">GlobalParts</span><span class="rel good">Reliable</span><b>₹810</b></div>
+              <div class="srow" style="--i:1"><span>Battery 300 mAh</span><span class="seller">GlobalParts</span><span class="rel good">Reliable</span><b>₹234</b></div>
+              <div class="srow" style="--i:2"><span>Heart sensor</span><span class="seller">ElectroMart</span><span class="rel best">Very reliable</span><b>₹115</b></div>
+              <div class="srow" style="--i:3"><span>Strap × 2</span><span class="seller">PolyWorld</span><span class="rel good">Reliable</span><b>₹133</b></div>
+            </div>
+            <div class="pane-foot"><span>⬇ CSV</span><span>＋ Add to note</span></div>
+          </div>
+          <div class="pane p-stu" data-p="2">
+            <div class="pane-head"><b>Study · Biology folder</b><span class="due">12 due today</span></div>
+            <div class="flipcard"><div class="face front"><small>Question</small>Which organelle produces most of a cell’s ATP?</div><div class="face back"><small>Answer</small>The mitochondrion.</div></div>
+            <div class="pane-foot"><span class="miss">✕ Missed it · back in 10 min</span><span class="got">✓ Got it · back in 3 days</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="fine center">Needs a free Groq key in <code>js/keys.js</code>. AI answers can be wrong, so verify anything important.</p>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee-track"><span><i><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8 7.5 9.5 4.4-1.5 7.5-4.9 7.5-9.5V6z"/><path d="m8.6 12 2.4 2.4 4.5-4.8"/></svg></i>Fact check</span><span><i><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.2v9.6L12 21l-8-4.2V7.2z"/><path d="m4 7.2 8 4.3 8-4.3M12 11.5V21"/></svg></i>Sourcing advisor</span><span><i><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-4.5L21 9l-9 4.5z"/><path d="M7 11.2v4.3c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-4.3M21 9v5"/></svg></i>Study</span><span><i>🗺</i>Knowledge map</span><span><i>★</i>Starred notes</span><span><i>🗑</i>Recycle bin</span><span><i>↗</i>Share links</span><span><i>🌗</i>Five themes</span><span><i>✍</i>Smart typing</span><span><i>▶</i>YouTube cards</span><span><i><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8 7.5 9.5 4.4-1.5 7.5-4.9 7.5-9.5V6z"/><path d="m8.6 12 2.4 2.4 4.5-4.8"/></svg></i>Fact check</span><span><i><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.2v9.6L12 21l-8-4.2V7.2z"/><path d="m4 7.2 8 4.3 8-4.3M12 11.5V21"/></svg></i>Sourcing advisor</span><span><i><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-4.5L21 9l-9 4.5z"/><path d="M7 11.2v4.3c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-4.3M21 9v5"/></svg></i>Study</span><span><i>🗺</i>Knowledge map</span><span><i>★</i>Starred notes</span><span><i>🗑</i>Recycle bin</span><span><i>↗</i>Share links</span><span><i>🌗</i>Five themes</span><span><i>✍</i>Smart typing</span><span><i>▶</i>YouTube cards</span></div></div>
+
+  <section class="wrap stats" aria-label="Verity at a glance">
+    <div class="stat reveal"><b data-to="3">0</b><span>AI tools built in</span></div>
+    <div class="stat reveal" style="--d:.08s"><b data-to="0">0</b><span>accounts needed</span></div>
+    <div class="stat reveal" style="--d:.16s"><b data-to="30" data-suf=" days">0</b><span>to undo a delete</span></div>
+    <div class="stat reveal" style="--d:.24s"><b data-to="5">0</b><span>themes to choose from</span></div>
+  </section>
+
+  <!-- ONE BOX -->
+  <section class="wrap steps3" aria-label="How it works">
+    <div class="step3 reveal"><span class="n">1</span><h3>Write or paste</h3><p>Notes live in your browser. Paste a link, a claim, a product name or a topic into the one box.</p></div>
+    <div class="step3 reveal" style="--d:.08s"><span class="n">2</span><h3>Verity picks the tool</h3><p>A YouTube link or a long claim goes to Fact check, a product to Sourcing, “study Biology” to Study.</p></div>
+    <div class="step3 reveal" style="--d:.16s"><span class="n">3</span><h3>Keep what matters</h3><p>Add results straight into your note, download a CSV, or let flashcards bring it back before you forget.</p></div>
+  </section>
+
+  <!-- TOOLS -->
+  <section id="tools" class="tools">
+    <div class="wrap">
+      <p class="kicker">The three tools</p>
+      <h2 class="sec-title">Each one built to do a single job well</h2>
+    </div>
+
+    <!-- FACT -->
+    <div class="wrap band b-fact" id="fact">
+      <div class="copy reveal">
+        <span class="tag tag-fact"><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8 7.5 9.5 4.4-1.5 7.5-4.9 7.5-9.5V6z"/><path d="m8.6 12 2.4 2.4 4.5-4.8"/></svg> Fact check</span>
+        <h3>Is it true? Get a verdict on every claim.</h3>
+        <p>Verity pulls out each factual claim and labels it <b class="t">true</b>, <b class="f">false</b> or <b class="s">subjective</b>, with a short summary on top. Check it three ways:</p>
+        <ul class="ways">
+          <li><span>▶</span><div><b>A YouTube link</b><small>Check what is actually said in the video.</small></div></li>
+          <li><span>✎</span><div><b>Text you paste</b><small>An article, a message or your own draft.</small></div></li>
+          <li><span>▍</span><div><b>A highlight in a note</b><small>Select a passage and press Fact check.</small></div></li>
+        </ul>
+        <a class="btn tool-btn" href="app.html#fact">Check something</a>
+      </div>
+      <div class="live reveal" style="--d:.1s" id="liveFact">
+        <div class="live-head"><b>Try the filters</b><span>Demo claims</span></div>
+        <div class="vbar big"><i class="t" id="fbT"></i><i class="f" id="fbF"></i><i class="s" id="fbS"></i></div>
+        <div class="chips" id="factChips" role="group" aria-label="Filter claims">
+          <button type="button" class="chip on" data-f="all">All <em id="cAll">6</em></button>
+          <button type="button" class="chip c-t" data-f="t">True <em id="cT">3</em></button>
+          <button type="button" class="chip c-f" data-f="f">False <em id="cF">2</em></button>
+          <button type="button" class="chip c-s" data-f="s">Opinion <em id="cS">1</em></button>
+        </div>
+        <ol class="claims big" id="factList">
+          <li data-v="t"><em class="t">True</em>Water boils at 100 °C at sea level.</li>
+          <li data-v="f"><em class="f">False</em>Humans use only 10% of their brains.</li>
+          <li data-v="t"><em class="t">True</em>Honey never spoils when stored well.</li>
+          <li data-v="s"><em class="s">Opinion</em>Mountains are better than beaches.</li>
+          <li data-v="f"><em class="f">False</em>Lightning never strikes twice.</li>
+          <li data-v="t"><em class="t">True</em>The Pacific is Earth’s largest ocean.</li>
+        </ol>
+        <button type="button" class="add-note" id="addNote">＋ Add results to my note</button>
+      </div>
+    </div>
+
+    <!-- SOURCING -->
+    <div class="wrap band b-src flip" id="sourcing">
+      <div class="live reveal" id="liveSrc">
+        <div class="live-head"><b>Smart watch</b><span>Example data · tap a priority</span></div>
+        <div class="seg" id="srcSeg" role="group" aria-label="What matters more">
+          <button type="button" data-w="0.85">Lowest price</button><button type="button" data-w="0.5" class="on">Balanced</button><button type="button" data-w="0.15">Most reliable</button>
+        </div>
+        <div class="total-box"><small>Cost to build one</small><div class="total" id="srcTotal">₹0</div><p id="srcNote"></p></div>
+        <div class="rows" id="srcRows"></div>
+        <div class="pane-foot"><span>⬇ Download CSV</span><span>＋ Add to note</span></div>
+      </div>
+      <div class="copy reveal" style="--d:.1s">
+        <span class="tag tag-src"><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.2v9.6L12 21l-8-4.2V7.2z"/><path d="m4 7.2 8 4.3 8-4.3M12 11.5V21"/></svg> Sourcing advisor</span>
+        <h3>Know what to buy, and from whom.</h3>
+        <p>Type what you want to build. Verity lists every part, finds the best seller for each, and gives a plain-English reason. Change your priority and every pick updates instantly, with no new AI call.</p>
+        <ul class="ways">
+          <li><span>₹</span><div><b>Cost per unit and per batch</b><small>Enter how many you will build; totals follow.</small></div></li>
+          <li><span>★</span><div><b>Real prices and stock</b><small>Live store listings, in-stock first, with a direct buy link.</small></div></li>
+          <li><span>⬇</span><div><b>CSV and notes</b><small>Download for Excel, or add a summary, table or full comparison to a note.</small></div></li>
+        </ul>
+        <a class="btn tool-btn" href="app.html#sourcing">Find parts</a>
+      </div>
+    </div>
+
+    <!-- STUDY -->
+    <div class="wrap band b-stu" id="study">
+      <div class="copy reveal">
+        <span class="tag tag-stu"><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-4.5L21 9l-9 4.5z"/><path d="M7 11.2v4.3c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-4.3M21 9v5"/></svg> Study</span>
+        <h3>Remember it for good.</h3>
+        <p>Turn a note, a few notes or whole folders into a quiz and flashcards. Cards you miss come back in minutes; cards you know come back after 1, 3, 7 and 16 days, so you only spend time on what you are about to forget.</p>
+        <ul class="ways">
+          <li><span>🗂</span><div><b>Study a note, notes or folders</b><small>One combined deck with questions spread across all of it.</small></div></li>
+          <li><span>🔥</span><div><b>A streak and a clear “due today”</b><small>See what is waiting on your home screen and sidebar.</small></div></li>
+          <li><span>❓</span><div><b>Quiz or flashcards</b><small>Wrong quiz answers go straight back into your deck.</small></div></li>
+        </ul>
+        <a class="btn tool-btn" href="app.html#study">Start studying</a>
+      </div>
+      <div class="live reveal" style="--d:.1s" id="liveStu">
+        <div class="live-head"><b>Biology · <span id="stuScope">Folder</span></b><span class="due" id="stuLeft">3 left</span></div>
+        <div class="scope" id="stuScopeBtns" role="group" aria-label="What to study"><button type="button" class="chip on" data-s="This note">This note</button><button type="button" class="chip" data-s="3 notes">Pick notes</button><button type="button" class="chip" data-s="Folder">Folders</button></div>
+        <button type="button" class="flash" id="flash" aria-live="polite"><span class="fq" id="fq"></span><span class="fa" id="fa"></span><small id="fhint">Tap the card to see the answer</small></button>
+        <div class="rate" id="rate"><button type="button" class="miss" data-g="0">✕ Missed it</button><button type="button" class="got" data-g="1">✓ Got it</button></div>
+        <div class="prog"><i id="stuBar"></i></div>
+        <p class="after" id="after">Flip a card, then tell Verity if you knew it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section class="wrap band b-map" id="map">
+    <div class="copy reveal">
+      <span class="tag">🗺 Knowledge map</span>
+      <h3>See every folder and note as one map.</h3>
+      <p>Your home screen draws all your notes as a map you can drag around. Click a note to read it, drag it onto a folder to file it, and switch on links to see how ideas connect.</p>
+      <div class="map-ctl"><a class="btn ghost" href="app.html">Open the map</a><button type="button" class="btn ghost" id="mapToggle" aria-pressed="false">− Minimise folders</button></div>
+    </div>
+    <div class="mapart reveal" style="--d:.1s" aria-hidden="true">
+      <svg viewBox="0 0 480 320" role="img">
+        <g class="lines" stroke="currentColor" stroke-opacity=".25" stroke-width="2" fill="none">
+          <path d="M240 160 L110 90M240 160 L360 80M240 160 L330 250"/><path class="kid" d="M110 90 L50 40M110 90 L60 140M360 80 L430 50M360 80 L440 120M330 250 L400 290M330 250 L270 295"/>
+        </g>
+        <g class="nodes">
+          <circle class="hub" cx="240" cy="160" r="34"/><text x="240" y="158" text-anchor="middle" class="t1">All notes</text><text x="240" y="172" text-anchor="middle" class="t2">9 notes</text>
+          <g class="f f1"><rect x="64" y="76" width="92" height="28" rx="14"/><text x="110" y="94" text-anchor="middle">Biology</text></g>
+          <g class="f f2"><rect x="316" y="66" width="88" height="28" rx="14"/><text x="360" y="84" text-anchor="middle">History</text></g>
+          <g class="f f3"><rect x="278" y="236" width="104" height="28" rx="14"/><text x="330" y="254" text-anchor="middle">Electronics</text></g>
+          <g class="n"><rect x="20" y="26" width="60" height="22" rx="7"/><text x="50" y="41" text-anchor="middle">Cells</text></g>
+          <g class="n"><rect x="22" y="128" width="68" height="22" rx="7"/><text x="56" y="143" text-anchor="middle">Genes</text></g>
+          <g class="n n2"><rect x="398" y="38" width="60" height="22" rx="7"/><text x="428" y="53" text-anchor="middle">Rome</text></g>
+          <g class="n n2"><rect x="410" y="108" width="62" height="22" rx="7"/><text x="441" y="123" text-anchor="middle">Greece</text></g>
+          <g class="n n3"><rect x="368" y="278" width="74" height="22" rx="7"/><text x="405" y="293" text-anchor="middle">ESP32 watch</text></g>
+          <g class="n n3"><rect x="232" y="284" width="76" height="22" rx="7"/><text x="270" y="299" text-anchor="middle">Oximeter</text></g>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- PRIVACY / BASICS -->
+  <section class="wrap" id="privacy">
+    <p class="kicker">Under the hood</p>
+    <h2 class="sec-title">A real notes app, kept private</h2>
+    <div class="tiles">
+      <article class="tile reveal"><span>🔒</span><h3>Private by design</h3><p>Notes stay in your browser’s storage. Nothing is uploaded unless you use an AI tool, and one switch turns every AI feature off.</p></article>
+      <article class="tile reveal" style="--d:.06s"><span>✍️</span><h3>Writes like a notes app</h3><p>Formatting, headings, lists, links, photos, audio, video, files and YouTube cards. Everything saves as you type.</p></article>
+      <article class="tile reveal" style="--d:.12s"><span>🗑</span><h3>Recycle bin, stars, sharing</h3><p>Deleted notes wait 30 days. Star what matters and share a note as a link or a file.</p></article>
+      <article class="tile reveal" style="--d:.18s"><span>⌨️</span><h3>Smart typing</h3><p>Autocorrect fixes typos to the closest word and ghost text predicts the rest. Both run on your device.</p></article>
+      <article class="tile reveal" style="--d:.24s"><span>🌗</span><h3>Five themes</h3><p>Daylight, Midnight, Paper, Forest and Sunset. Follows your device until you choose.</p></article>
+      <article class="tile reveal" style="--d:.3s"><span>📱</span><h3>Works on your phone</h3><p>The layout adapts to small screens, with a note list that opens into a full-screen editor.</p></article>
+    </div>
+  </section>
+
+  <section class="wrap" id="faq">
+    <h2 class="sec-title left">Questions</h2>
+    <div class="faq">
+      <details><summary>Where are my notes stored?</summary><p>In your browser’s local storage on the device you are using. They don’t sync between devices, and clearing your browser’s site data removes them. Deleted notes stay in the Recycle bin for 30 days.</p></details>
+      <details><summary>Do I have to use AI?</summary><p>No. Fact check, Sourcing, Study and the writing tools only work if you add a Groq key to <code>js/keys.js</code>, and “Turn off all AI features” in AI settings hides them completely. Autocorrect and word prediction run on your device.</p></details>
+      <details><summary>How accurate are the verdicts and prices?</summary><p>They are AI-generated and the model has no live web access, so treat them as a strong first pass. The Sourcing advisor reads real store listings through the Verity server (run python3 server.py), but prices change often, so open the listing and confirm before you buy.</p></details>
+      <details><summary>Do I need an account?</summary><p>No. Open the app and start writing.</p></details>
+      <details><summary>Does it work offline?</summary><p>Writing, searching and reviewing flashcards work once the page has loaded. AI tools need an internet connection.</p></details>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="wrap">
+      <h2>Your next idea is waiting.</h2>
+      <p>Write it, check it, source it, learn it.</p>
+      <a class="btn big" href="app.html">Open Verity</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <span>&copy; 2026 Verity</span>
+  <span>Made for people who think best in writing.</span>
+</footer>
+
+<button type="button" class="to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
+  /* reveal on scroll */
+  var els=[].slice.call(document.querySelectorAll(".reveal"));
+  if(!("IntersectionObserver" in window)){els.forEach(function(e){e.classList.add("in")})}
+  else{var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}})},{threshold:.12});els.forEach(function(e){io.observe(e)})}
+
+  /* ---------- hero demo: typing -> routes -> result ---------- */
+  var SC=[{t:"The Great Wall is visible from space and it is over 20,000 km long.",r:0},{t:"smart watch",r:1},{t:"study Biology",r:2}];
+  var typeEl=document.getElementById("demoType"),panes=[].slice.call(document.querySelectorAll(".demo-stage .pane")),tabs=[].slice.call(document.querySelectorAll("#demoRoutes .rt")),demo=document.getElementById("demo");
+  var cur=0,timer=null,manual=false,alive=true;
+  function show(i){
+    panes.forEach(function(p,k){p.classList.remove("active");if(k===i){void p.offsetWidth;p.classList.add("active")}});
+    tabs.forEach(function(t,k){t.classList.toggle("best",k===i);t.setAttribute("aria-selected",k===i?"true":"false")});
+    if(i===1)countUp();
+  }
+  function countUp(){
+    var el=document.querySelector("[data-count]");if(!el||reduce)return;var to=+el.getAttribute("data-count"),t0=performance.now();
+    (function f(n){var k=Math.min(1,(n-t0)/900);el.textContent=Math.round(to*(1-Math.pow(1-k,3))).toLocaleString("en-IN");if(k<1)requestAnimationFrame(f)})(t0);
+  }
+  function wait(ms){return new Promise(function(r){timer=setTimeout(r,ms)})}
+  async function play(){
+    while(alive&&!manual){
+      var s=SC[cur];typeEl.textContent="";tabs.forEach(function(t){t.classList.remove("best")});panes.forEach(function(p){p.classList.remove("active")});
+      for(var i=1;i<=s.t.length&&!manual;i++){typeEl.textContent=s.t.slice(0,i);await wait(s.t.length>30?22:55)}
+      if(manual)return;await wait(250);show(s.r);await wait(5200);
+      if(manual)return;
+      for(var j=s.t.length;j>0&&!manual;j-=3){typeEl.textContent=s.t.slice(0,Math.max(0,j));await wait(8)}
+      cur=(cur+1)%SC.length;
+    }
+  }
+  function manualShow(i){manual=true;clearTimeout(timer);cur=i;typeEl.textContent=SC[i].t;show(i)}
+  tabs.forEach(function(t){t.addEventListener("click",function(){manualShow(+t.getAttribute("data-d"))})});
+  if(reduce){manual=true;typeEl.textContent=SC[0].t;show(0)}
+  else{show(0);typeEl.textContent=SC[0].t;panes[0].classList.add("active");setTimeout(function(){if(manual)return;typeEl.textContent="";play()},1800)}
+  document.addEventListener("visibilitychange",function(){if(document.hidden){clearTimeout(timer)}else if(!manual&&!reduce){clearTimeout(timer);play()}});
+
+  /* ---------- fact check filters ---------- */
+  var list=document.getElementById("factList"),rows=[].slice.call(list.children),cnt={t:0,f:0,s:0};
+  rows.forEach(function(r){cnt[r.getAttribute("data-v")]++});
+  function setBar(){var n=rows.length;["T","F","S"].forEach(function(k){document.getElementById("fb"+k).style.flex=cnt[k.toLowerCase()]})}
+  document.getElementById("cAll").textContent=rows.length;document.getElementById("cT").textContent=cnt.t;document.getElementById("cF").textContent=cnt.f;document.getElementById("cS").textContent=cnt.s;setBar();
+  document.getElementById("factChips").addEventListener("click",function(e){
+    var b=e.target.closest("[data-f]");if(!b)return;var f=b.getAttribute("data-f");
+    [].forEach.call(this.children,function(c){c.classList.toggle("on",c===b)});
+    rows.forEach(function(r){r.classList.toggle("gone",f!=="all"&&r.getAttribute("data-v")!==f)});
+  });
+  var add=document.getElementById("addNote");
+  add.addEventListener("click",function(){var on=add.classList.toggle("done");add.textContent=on?"✓ Added to your note":"＋ Add results to my note"});
+
+  /* ---------- sourcing: same scoring idea as the app ---------- */
+  var PARTS=[
+   {n:"Display, OLED",q:1,s:[["ElectroMart",900,93],["GlobalParts",810,87],["ChipBazaar",738,76]]},
+   {n:"Battery 300 mAh",q:1,s:[["ElectroMart",260,93],["GlobalParts",234,87],["PowerCell Co",205,79]]},
+   {n:"Heart sensor",q:1,s:[["ElectroMart",115,93],["GlobalParts",104,87],["ChipBazaar",94,76]]},
+   {n:"Strap",q:2,s:[["OmniMarket",90,91],["PolyWorld",80,88],["BulkMaterials",62,78]]}];
+  var inr=function(n){return "₹"+Math.round(n).toLocaleString("en-IN")};
+  function srcDraw(w){
+    var total=0,cheap=0,html="";
+    PARTS.forEach(function(p,i){
+      var low=Math.min.apply(null,p.s.map(function(x){return x[1]})),best=p.s.slice().sort(function(a,b){return (w*(100*low/b[1])+(1-w)*b[2])-(w*(100*low/a[1])+(1-w)*a[2])})[0];
+      total+=best[1]*p.q;cheap+=low*p.q;
+      var lab=best[2]>=88?["Very reliable","best"]:best[2]>=80?["Reliable","good"]:["Less reliable","bad"];
+      html+='<div class="srow in" style="--i:'+i+'"><span>'+p.n+(p.q>1?" × "+p.q:"")+'</span><span class="seller">'+best[0]+'</span><span class="rel '+lab[1]+'">'+lab[0]+'</span><b>'+inr(best[1]*p.q)+'</b></div>';
+    });
+    document.getElementById("srcRows").innerHTML=html;document.getElementById("srcTotal").textContent=inr(total);
+    document.getElementById("srcNote").textContent=total-cheap<1?"Cheapest and reliable at once.":"Always the cheapest seller would cost "+inr(cheap)+", but some parts would arrive late more often.";
+  }
+  document.getElementById("srcSeg").addEventListener("click",function(e){var b=e.target.closest("[data-w]");if(!b)return;[].forEach.call(this.children,function(c){c.classList.toggle("on",c===b)});srcDraw(parseFloat(b.getAttribute("data-w")))});
+  srcDraw(0.5);
+
+  /* ---------- study: flip, grade, reschedule ---------- */
+  var CARDS=[["Which organelle produces most of a cell’s ATP?","The mitochondrion."],["What carries amino acids to the ribosome?","Transfer RNA (tRNA)."],["What is the base pair of adenine in DNA?","Thymine."]];
+  var ci=0,flipped=false,answered=0,fq=document.getElementById("fq"),fa=document.getElementById("fa"),fl=document.getElementById("flash"),rate=document.getElementById("rate");
+  function card(){fq.textContent=CARDS[ci][0];fa.textContent=CARDS[ci][1];fl.classList.remove("flipped");flipped=false;rate.classList.remove("on");document.getElementById("fhint").textContent="Tap the card to see the answer"}
+  function flip(){if(flipped)return;flipped=true;fl.classList.add("flipped");rate.classList.add("on");document.getElementById("fhint").textContent=""}
+  fl.addEventListener("click",flip);
+  rate.addEventListener("click",function(e){
+    var b=e.target.closest("[data-g]");if(!b)return;var good=b.getAttribute("data-g")==="1";answered++;
+    document.getElementById("after").textContent=good?"Nice. This card comes back in 3 days.":"No problem. This card comes back in 10 minutes.";
+    document.getElementById("stuBar").style.width=Math.min(100,answered/CARDS.length*100)+"%";
+    document.getElementById("stuLeft").textContent=Math.max(0,CARDS.length-answered)+" left";
+    ci=(ci+1)%CARDS.length;if(answered>=CARDS.length){document.getElementById("after").textContent=(good?"Nice. ":"")+"Session complete. Come back tomorrow for what is due.";answered=0;setTimeout(function(){document.getElementById("stuBar").style.width="0";document.getElementById("stuLeft").textContent=CARDS.length+" left"},2600)}
+    card();
+  });
+  document.getElementById("stuScopeBtns").addEventListener("click",function(e){var b=e.target.closest("[data-s]");if(!b)return;[].forEach.call(this.children,function(c){c.classList.toggle("on",c===b)});document.getElementById("stuScope").textContent=b.getAttribute("data-s")});
+  document.getElementById("stuScope").textContent="This note";card();
+})();
+</script>
+<script>
+/* Landing page motion layer (was js/site-fx.js) */
+/* Verity landing: motion layer (progressive enhancement, respects reduced motion). */
+(function(){
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches,fine=window.matchMedia&&matchMedia("(pointer:fine)").matches;
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+
+  /* headline: words rise in one by one */
+  var h1=$("h1");if(h1&&!reduce){
+    var i=0;(function walk(n){[].slice.call(n.childNodes).forEach(function(c){
+      if(c.nodeType===3){var f=document.createDocumentFragment();c.nodeValue.split(/(\s+)/).forEach(function(t){if(!t)return;if(/^\s+$/.test(t)){f.appendChild(document.createTextNode(" "));return}var s=document.createElement("span");s.className="w";s.style.setProperty("--wi",i++);s.textContent=t;f.appendChild(s)});c.replaceWith(f)}
+      else if(c.nodeType===1&&c.tagName!=="BR")walk(c)})})(h1);
+  }
+
+  /* scroll: progress bar, sticky nav, back-to-top, active section */
+  var bar=$(".fx-prog"),nav=$(".nav"),top=$(".to-top"),links=$$(".nav nav a[href^='#']"),secs=links.map(function(a){return $(a.getAttribute("href"))});
+  var tick=false;
+  function onScroll(){tick=false;var y=window.scrollY,max=document.documentElement.scrollHeight-innerHeight;
+    if(bar)bar.style.transform="scaleX("+(max>0?y/max:0)+")";
+    nav.classList.toggle("stuck",y>12);if(top)top.classList.toggle("on",y>900);
+    var act=-1;secs.forEach(function(s,k){if(s&&s.getBoundingClientRect().top<innerHeight*.4)act=k});links.forEach(function(a,k){a.classList.toggle("act",k===act)});
+    if(!reduce){var hero=$(".hero");if(hero&&y<900){var ab=$(".aurora");if(ab)ab.style.transform="translateY("+y*.18+"px)"}}
+  }
+  addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(onScroll)}},{passive:true});onScroll();
+  if(top)top.addEventListener("click",function(){scrollTo({top:0,behavior:reduce?"auto":"smooth"})});
+
+  /* hero: spotlight grid follows the cursor; floating chips drift with it */
+  var hero=$(".hero");
+  if(hero&&fine&&!reduce){
+    hero.addEventListener("pointermove",function(e){var r=hero.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+      hero.style.setProperty("--mx",x+"px");hero.style.setProperty("--my",y+"px");
+      hero.style.setProperty("--px",((x/r.width-.5)*-26).toFixed(1));hero.style.setProperty("--py",((y/r.height-.5)*-18).toFixed(1));
+      var fl=$(".floaters");if(fl){fl.style.setProperty("--px",hero.style.getPropertyValue("--px"));fl.style.setProperty("--py",hero.style.getPropertyValue("--py"))}});
+    /* demo tilt */
+    var demo=$("#demo");
+    demo.addEventListener("pointermove",function(e){var r=demo.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      demo.classList.add("tilt");demo.style.setProperty("--rx",((.5-y)*5).toFixed(2)+"deg");demo.style.setProperty("--ry",((x-.5)*7).toFixed(2)+"deg");
+      var st=$(".demo-stage",demo).getBoundingClientRect();demo.style.setProperty("--gx",(e.clientX-st.left)+"px");demo.style.setProperty("--gy",(e.clientY-st.top)+"px")});
+    demo.addEventListener("pointerleave",function(){demo.classList.remove("tilt");demo.style.setProperty("--rx","0deg");demo.style.setProperty("--ry","0deg")});
+  }
+
+  /* tiles: spotlight under the cursor */
+  $$(".tile").forEach(function(t){t.addEventListener("pointermove",function(e){var r=t.getBoundingClientRect();t.style.setProperty("--mx",(e.clientX-r.left)+"px");t.style.setProperty("--my",(e.clientY-r.top)+"px")})});
+
+  /* count-up numbers */
+  function count(el){
+    var to=+el.getAttribute("data-to"),suf=el.getAttribute("data-suf")||"";
+    if(reduce){el.textContent=to+suf;return}
+    var t0=performance.now(),d=1300;(function f(n){var k=Math.min(1,(n-t0)/d);el.textContent=Math.round(to*(1-Math.pow(1-k,4)))+suf;if(k<1)requestAnimationFrame(f)})(t0);
+  }
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(en){en.forEach(function(x){if(!x.isIntersecting)return;io.unobserve(x.target);
+      if(x.target.hasAttribute("data-to"))count(x.target);else x.target.classList.add("in")})},{threshold:.35});
+    $$("[data-to]").forEach(function(e){io.observe(e)});$$(".mapart").forEach(function(e){io.observe(e)});
+  }else{$$("[data-to]").forEach(count);$$(".mapart").forEach(function(e){e.classList.add("in")})}
+
+  /* map art: stagger index, and a working minimise / maximise toggle */
+  $$(".mapart .nodes>g").forEach(function(g,k){g.style.setProperty("--k",k)});
+  var art=$(".mapart"),mc=$("#mapToggle");
+  if(art&&mc)mc.addEventListener("click",function(){var min=art.classList.toggle("min");mc.textContent=min?"＋ Maximise folders":"− Minimise folders";mc.setAttribute("aria-pressed",min?"true":"false")});
+
+  /* closing button: little sparkles */
+  var cb=$(".closing .btn");
+  if(cb&&!reduce)cb.addEventListener("pointerenter",function(){
+    var r=cb.getBoundingClientRect(),host=cb.parentNode;host.style.position="relative";
+    for(var k=0;k<10;k++){var s=document.createElement("span");s.className="spark";s.textContent=["✦","✧","⚖","🧩","🎓"][k%5];
+      var a=Math.random()*Math.PI*2,d=60+Math.random()*60;s.style.left=(cb.offsetLeft+cb.offsetWidth/2)+"px";s.style.top=(cb.offsetTop+cb.offsetHeight/2)+"px";
+      s.style.setProperty("--sx",Math.cos(a)*d+"px");s.style.setProperty("--sy",Math.sin(a)*d+"px");host.appendChild(s);setTimeout(function(x){x.remove()},950,s)}
+  });
+})();
+</script>
+<!-- TRACKSWITCH -->
+<style>
+.trk{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;width:min(560px,calc(100% - 24px));border:1px solid #243047;border-radius:16px;background:#111826;overflow:hidden;box-shadow:0 12px 34px rgba(0,0,0,.45);font-family:"Public Sans",system-ui,sans-serif}
+.trk a{flex:1;display:flex;flex-direction:column;gap:2px;padding:10px 16px;text-decoration:none;color:#9aa7bf;font-size:15px;font-weight:700;line-height:1.2}
+.trk a small{font-size:11.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;opacity:.85}
+.trk a+a{border-left:1px solid #243047;text-align:right;align-items:flex-end}
+.trk a.on{color:#07101c;background:linear-gradient(90deg,#86e0b3,#8fb0ff);cursor:default}
+.trk a:not(.on):hover{color:#eef2fa;background:rgba(122,162,255,.1)}
+@media(max-width:480px){.trk a{padding:9px 12px;font-size:14px}}
+</style>
+<nav class="trk" aria-label="Project tracks"><a class="on" href="/" aria-current="page"><small>Freshers Track</small>Verity</a><a href="local"><small>LLM Track</small>Govt Document Assistant</a></nav>
+</body>
+</html>

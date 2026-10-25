@@ -1,0 +1,13 @@
+*.bak
+*.bak2
+*.bak3
+*.bak4
+*.bak5
+.env
+.verity_groq_keys
+go_public.py
+start.bat
+start.command
+config.json
+__pycache__/
+.DS_Store

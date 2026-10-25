@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Govt Document Assistant · Local LLM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e16;--surf:#111826;--line:#243047;--ink:#eef2fa;--muted:#9aa7bf;--green:#4cc38a;--blue:#7aa2ff;--warn:#e5b94b;--bad:#ef6b73}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:"Public Sans",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(800px 420px at 20% -5%,rgba(76,195,138,.16),transparent 60%),radial-gradient(700px 420px at 85% 0,rgba(122,162,255,.14),transparent 60%)}
+.wrap{max-width:760px;margin:0 auto;padding:0 22px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.brand{font-family:Literata,serif;font-weight:700;font-size:18px}
+.top a{font-size:14px;color:var(--muted);text-decoration:none}
+.top a:hover{color:var(--ink)}
+.hero{text-align:center;padding:44px 0 30px}
+.pill{display:inline-block;font-size:13px;font-weight:600;padding:6px 14px;border-radius:999px;border:1px solid rgba(76,195,138,.45);color:#aef0cf;background:rgba(76,195,138,.08)}
+h1{font-family:Literata,serif;font-size:clamp(34px,7vw,54px);line-height:1.1;margin:22px 0 14px;letter-spacing:-.5px}
+h1 span{background:linear-gradient(90deg,var(--green),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:clamp(16px,2.4vw,18px);max-width:520px;margin:0 auto 30px}
+.btn{font:inherit;font-weight:700;font-size:17px;border:0;cursor:pointer;border-radius:14px;padding:15px 30px;color:#07101c;background:linear-gradient(90deg,#86e0b3,#8fb0ff);box-shadow:0 10px 30px rgba(122,162,255,.25)}
+.btn:hover{filter:brightness(1.07)}
+.btn[disabled]{opacity:.6;cursor:wait}
+#msg{min-height:22px;margin:18px 0 0;font-size:14px;color:var(--muted)}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:6px;text-align:left}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px}
+.card.tuned{border-color:rgba(76,195,138,.55)}
+.card h3{margin:0 0 10px;font-size:14px;font-weight:600;color:var(--muted)}
+.st{display:inline-block;font-size:13px;font-weight:800;padding:3px 11px;border-radius:999px;color:#07101c}
+.st.ok{background:var(--green)}.st.nf{background:var(--warn)}.st.err{background:var(--bad);color:#fff}
+.ans{font-size:20px;font-weight:600;margin:12px 0 6px;white-space:pre-wrap}
+.ans.dim{font-size:16px;font-weight:500;color:var(--muted)}
+.qv{font-size:13.5px;color:var(--green)}.qv.bad{color:var(--bad)}
+.fine{font-size:13px;color:var(--muted)}
+details{margin-top:18px;text-align:left}
+summary{cursor:pointer;color:var(--muted);font-size:14px;text-align:center;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary:hover{color:var(--ink)}
+.ask{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.ask textarea{flex:1 1 280px;min-height:54px;resize:vertical;font:inherit;color:var(--ink);background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.ask .btn{font-size:15px;padding:12px 22px;box-shadow:none}
+.pass{margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surf);font-size:14px;white-space:pre-wrap;color:#cfd8ea}
+.pass b{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px}
+.pass mark{background:rgba(229,185,75,.38);color:#fff;border-radius:3px;padding:0 2px}
+table{width:100%;border-collapse:collapse;background:var(--surf);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:36px;text-align:left}
+th,td{padding:11px 14px;border-bottom:1px solid var(--line);font-size:15px}
+th{color:var(--muted);font-weight:600;font-size:13px}
+tr:last-child td{border-bottom:0}
+td.best{color:var(--green);font-weight:700}
+.flow{text-align:center;color:var(--muted);font-size:14px;margin:48px 0 0}
+.foot{text-align:center;color:var(--muted);font-size:13px;margin:14px 0 36px}
+.tracks{display:flex;justify-content:center;padding:18px 0 0}
+.tr{display:flex;width:100%;max-width:560px;border:1px solid var(--line);border-radius:16px;background:var(--surf);overflow:hidden}
+.tr a{flex:1;display:flex;flex-direction:column;gap:2px;padding:11px 16px;text-decoration:none;color:var(--muted);font-size:15px;font-weight:700;line-height:1.2;position:relative}
+.tr a small{font-size:11.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;opacity:.85}
+.tr a.on{color:#07101c;background:linear-gradient(90deg,#86e0b3,#8fb0ff);cursor:default}
+.tr a:not(.on):hover{color:var(--ink);background:rgba(122,162,255,.08)}
+.tr a+a{border-left:1px solid var(--line);text-align:right;align-items:flex-end}
+.tr a.on+a:before,.tr a:not(.on)+a.on:before{content:"";position:absolute}
+@media(max-width:480px){.tr a{padding:10px 12px;font-size:14px}}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center}
+a.btn{text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none;font-size:15px;padding:13px 22px}
+.btn.ghost:hover{border-color:var(--blue);filter:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tracks">
+    <nav class="tr" aria-label="Project tracks">
+      <a href="/"><small>Freshers Track</small>Verity</a>
+      <a class="on" href="local" aria-current="page"><small>LLM Track</small>Govt Document Assistant</a>
+    </nav>
+  </div>
+
+  <section class="hero">
+    <span class="pill">Local LLM Track &middot; Fine-tuned Qwen2.5-3B &middot; SGLang &middot; No cloud API</span>
+    <h1>Ask a government document.<br><span>Get the exact line.</span></h1>
+    <p class="lead">Our fine-tuned local model answers only from the document, or says &ldquo;not found&rdquo;.</p>
+    <div class="cta"><a class="btn" id="tryBtn" href="ask">Open the Document Assistant &rarr;</a>
+    <button class="btn ghost" id="demoBtn" type="button">&#9654; One-click demo (RTI Act)</button></div>
+    <div id="msg" role="status"></div>
+    <div class="res" id="res"></div>
+
+    <details id="more">
+      <summary>Ask your own question &middot; Hindi, Hinglish or English</summary>
+      <div class="ask">
+        <textarea id="q" maxlength="1000" placeholder="e.g. Is scheme me age limit kya hai?"></textarea>
+        <button class="btn" id="go" type="button">Ask</button>
+      </div>
+    </details>
+
+    <details id="passBox" hidden>
+      <summary>Show retrieved passages</summary>
+      <div id="pass"></div>
+    </details>
+  </section>
+
+  <table id="resTable" hidden><thead><tr><th>Metric</th><th>Base</th><th>Fine-tuned</th></tr></thead><tbody></tbody></table>
+
+  <p class="flow">Retrieve (BM25) &rarr; Local model (SGLang) &rarr; Quote verified &rarr; or &ldquo;not found&rdquo;</p>
+  <p class="foot">Only our own local model servers are used. A verified quote proves it exists, not that the answer is right.</p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var DEMO_Q = "What is the time limit to reply to an RTI request?";
+  /* Fill from teammate A. Row: [metric, base, fine-tuned, true if fine-tuned is better]. [] hides the table. */
+  var RESULTS = [];
+
+  var info = null, busy = false;
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function rtiDoc() {
+    if (!info || !info.docs) return "ALL";
+    var ids = info.docs.map(function (d) { return d.doc_id; });
+    if (ids.indexOf("RTI_Act_2005_English") >= 0) return "RTI_Act_2005_English";
+    for (var i = 0; i < ids.length; i++) if (/^RTI/i.test(ids[i]) && /english/i.test(ids[i])) return ids[i];
+    return "ALL";
+  }
+
+  function label(k) {
+    if (info && info.models && info.models[k]) return info.models[k].label;
+    return k === "curated" ? "Fine-tuned (curated data)" : (k === "base" ? "Base Qwen2.5-3B" : k);
+  }
+
+  function highlighted(box, text, quote) {
+    var i = quote ? text.indexOf(quote) : -1;
+    if (i < 0) { box.appendChild(document.createTextNode(text)); return; }
+    box.appendChild(document.createTextNode(text.slice(0, i)));
+    box.appendChild(el("mark", null, quote));
+    box.appendChild(document.createTextNode(text.slice(i + quote.length)));
+  }
+
+  function card(k, r) {
+    var c = el("div", "card" + (k === "curated" ? " tuned" : ""));
+    c.appendChild(el("h3", null, label(k)));
+    if (r.error) {
+      c.appendChild(el("span", "st err", r.error === "not_connected" ? "Model not connected" : "Model unreachable"));
+      c.appendChild(el("p", "fine", r.message || r.error));
+      return c;
+    }
+    var found = r.status === "answered";
+    c.appendChild(el("span", "st " + (found ? "ok" : "nf"), found ? "Answered" : "Not found in the document"));
+    var txt = r.answer || "";
+    if (!found || /^\s*not[_ ]?found\s*$/i.test(txt)) txt = "The document does not say this.";
+    c.appendChild(el("p", "ans" + (found ? "" : " dim"), txt));
+    if (found) {
+      c.appendChild(el("div", "qv" + (r.quote_valid ? "" : " bad"),
+        r.quote_valid ? "✓ Quote verified in passage " + (r.source_id || "") : "Quote NOT found in the passages"));
+    }
+    return c;
+  }
+
+  function render(d) {
+    var res = $("res"); res.textContent = "";
+    var order = ["curated", "base"].filter(function (k) { return d.results[k]; });
+    Object.keys(d.results).forEach(function (k) { if (order.indexOf(k) < 0) order.push(k); });
+    order.forEach(function (k) { res.appendChild(card(k, d.results[k])); });
+    var quotes = [];
+    Object.keys(d.results).forEach(function (k) {
+      var r = d.results[k];
+      if (r && r.evidence_quote) quotes.push(r.evidence_quote);
+    });
+    var pass = $("pass"); pass.textContent = "";
+    (d.chunks || []).forEach(function (c) {
+      var p = el("div", "pass");
+      p.appendChild(el("b", null, c.chunk_id + "  ·  " + c.doc_id));
+      var q = quotes.filter(function (x) { return c.text.indexOf(x) >= 0; })[0] || "";
+      highlighted(p, c.text, q);
+      pass.appendChild(p);
+    });
+    $("passBox").hidden = !(d.chunks && d.chunks.length);
+  }
+
+  function ask(question, doc) {
+    if (busy) return;
+    var q = (question || "").trim();
+    if (!q) { $("msg").textContent = "Type a question first."; return; }
+    busy = true;
+    $("go").disabled = true; $("demoBtn").disabled = true;
+    $("msg").textContent = "Asking both models… (first call can take a while)";
+    $("res").textContent = ""; $("passBox").hidden = true;
+    fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: q, doc_id: doc || "ALL", models: ["curated", "base"] })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.ok) { $("msg").textContent = "Error: " + (d.message || d.error); return; }
+      $("msg").textContent = "";
+      render(d);
+    }).catch(function () {
+      $("msg").textContent = "Request failed. Is the server running?";
+    }).then(function () {
+      busy = false; $("go").disabled = false; $("demoBtn").disabled = false;
+    });
+  }
+
+  fetch("/api/info").then(function (r) { return r.json(); }).then(function (d) {
+    if (d && d.ok) info = d;
+  }).catch(function () {});
+
+  $("demoBtn").onclick = function () { ask(DEMO_Q, rtiDoc()); };
+  $("go").onclick = function () { ask($("q").value, "ALL"); };
+  $("q").addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); ask($("q").value, "ALL"); }
+  });
+
+  if (RESULTS.length) {
+    var tb = document.querySelector("#resTable tbody");
+    RESULTS.forEach(function (row) {
+      var tr = el("tr");
+      tr.appendChild(el("td", null, row[0]));
+      tr.appendChild(el("td", null, row[1]));
+      tr.appendChild(el("td", row[3] ? "best" : null, row[2]));
+      tb.appendChild(tr);
+    });
+    $("resTable").hidden = false;
+  }
+})();
+</script>
+</body>
+</html>

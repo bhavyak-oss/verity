@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Verity notes</title>
+<meta name="description" content="Write and keep your notes in Verity. Everything saves on your device.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%20role='img'%20aria-label='Verity'%3E%3Cdefs%3E%3ClinearGradient%20id='vbg'%20x1='6'%20y1='2'%20x2='58'%20y2='64'%20gradientUnits='userSpaceOnUse'%3E%3Cstop%20offset='0'%20stop-color='%236f8dff'/%3E%3Cstop%20offset='.55'%20stop-color='%233d5be0'/%3E%3Cstop%20offset='1'%20stop-color='%237a4ee6'/%3E%3C/linearGradient%3E%3ClinearGradient%20id='vck'%20x1='20'%20y1='26'%20x2='46'%20y2='46'%20gradientUnits='userSpaceOnUse'%3E%3Cstop%20offset='0'%20stop-color='%2314b88c'/%3E%3Cstop%20offset='1'%20stop-color='%232f6be0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width='64'%20height='64'%20rx='16'%20fill='url(%23vbg)'/%3E%20%20%3Cpath%20d='M19%2012h18.5L48%2022.5V49a3.5%203.5%200%200%201-3.5%203.5h-25A3.5%203.5%200%200%201%2016%2049V15.5A3.5%203.5%200%200%201%2019.500%2012z'%20fill='%23fff'/%3E%3Cpath%20d='M37.500%2012%2048%2022.500H41a3.500%203.500%200%200%201-3.500-3.500z'%20fill='%23c9d4ff'/%3E%20%20%3Cpath%20d='M22.500%2033%2029.500%2040.500l12-12.500'%20fill='none'%20stroke='url(%23vck)'%20stroke-width='6'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%20%20%3Crect%20x='22'%20y='45'%20width='15'%20height='2.600'%20rx='1.300'%20fill='%23c9d4ff'/%3E%20%20%3Cpath%20d='M51%206.500l1.500%203.500%203.500%201.500-3.500%201.500L51%2016.500%2049.500%2013%2046%2011.500%2049.500%2010z'%20fill='%23ffd36b'/%3E%3C/svg%3E" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem("quillora-v1-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="css/style.css?v=33.3">
+</head>
+<body>
+<div class="app" id="app">
+  <button class="icon-btn side-open" id="sideOpen" type="button" title="Show sidebar (Ctrl+\)" aria-label="Show sidebar"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+  <aside>
+    <div class="side-top">
+      <div class="side-row">
+        <a class="brand" id="brand" href="app.html" title="Home"><svg class="vlogo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="26" height="26" aria-hidden="true" focusable="false"><defs><linearGradient id='vbg' x1='6' y1='2' x2='58' y2='64' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='#6f8dff'/><stop offset='.55' stop-color='#3d5be0'/><stop offset='1' stop-color='#7a4ee6'/></linearGradient><linearGradient id='vck' x1='20' y1='26' x2='46' y2='46' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='#14b88c'/><stop offset='1' stop-color='#2f6be0'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(#vbg)'/>  <path d='M19 12h18.5L48 22.5V49a3.5 3.5 0 0 1-3.5 3.5h-25A3.5 3.5 0 0 1 16 49V15.5A3.5 3.5 0 0 1 19.500 12z' fill='#fff'/><path d='M37.500 12 48 22.500H41a3.500 3.500 0 0 1-3.500-3.500z' fill='#c9d4ff'/>  <path d='M22.500 33 29.500 40.500l12-12.500' fill='none' stroke='url(#vck)' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/>  <rect x='22' y='45' width='15' height='2.600' rx='1.300' fill='#c9d4ff'/>  <path d='M51 6.500l1.500 3.500 3.500 1.500-3.500 1.500L51 16.500 49.500 13 46 11.500 49.500 10z' fill='#ffd36b'/></svg>Verity</a>
+        <div class="side-icons">
+          <button class="icon-btn" id="sideMin" title="Hide sidebar (Ctrl+\)" aria-label="Hide sidebar" aria-expanded="true"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+          <div class="theme-wrap"><button class="icon-btn" id="theme" title="Choose a theme" aria-label="Choose a theme" aria-haspopup="menu" aria-expanded="false"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button><div class="theme-pop hide" id="themePop" role="menu" aria-label="Themes"></div></div>
+          <button class="icon-btn" id="settings" title="AI settings" aria-label="AI settings"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+        </div>
+      </div>
+      <div class="side-actions">
+        <button class="btn primary" id="new"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New note</button>
+        <button class="btn" id="aiNotes" title="Turn a chunk of text into a folder of notes">✨ AI notes</button>
+      </div>
+      <div class="side-tools" id="sideTools" role="group" aria-label="AI tools"><button type="button" data-tool="fact" title="Fact check"><span><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8 7.5 9.5 4.4-1.5 7.5-4.9 7.5-9.5V6z"/><path d="m8.6 12 2.4 2.4 4.5-4.8"/></svg></span>Check</button><button type="button" data-tool="src" title="Sourcing advisor"><span><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.2v9.6L12 21l-8-4.2V7.2z"/><path d="m4 7.2 8 4.3 8-4.3M12 11.5V21"/></svg></span>Source</button><button type="button" data-tool="stu" title="Study"><span><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-4.5L21 9l-9 4.5z"/><path d="M7 11.2v4.3c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-4.3M21 9v5"/></svg></span>Study<i class="due-pill hide" id="sideDue"></i></button></div>
+      <div class="search-wrap"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input class="search" id="q" type="search" placeholder="Search notes" aria-label="Search notes"></div>
+    </div>
+    <div class="folder-panel">
+      <div class="folder-heading"><button class="folder-toggle" id="folderToggle" type="button" aria-expanded="true" aria-controls="foldersWrap" title="Minimise or maximise the folder list"><svg class="fold-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg><span>FOLDERS</span></button><button class="folder-add" id="newFolder" type="button" title="Create folder" aria-label="Create folder"><svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M12 5v14M5 12h14"/></svg></button></div>
+      <button class="folder-peek" id="folderPeek" type="button" aria-label="Show all folders"></button>
+      <div class="folders-wrap" id="foldersWrap"><div class="folders-clip"><div id="folders" class="folders"></div></div></div>
+    </div>
+    <div class="list" id="list"></div>
+  </aside>
+  <main>
+    <section class="home hide" id="empty" aria-label="Home">
+      <div class="dash-wrap dash-head">
+        <button class="tb back" id="homeBack" type="button">&lsaquo; Notes</button>
+        <div class="dash-top">
+          <div><p class="eyebrow" id="homeDate"></p><h2 id="homeTitle">Welcome</h2></div>
+          <div class="kpis" id="kpis" aria-label="Your numbers"></div>
+        </div>
+      </div>
+      <div class="dash-wrap ai-trio-wrap" id="aiTrio">
+        <form class="lens" id="lens" autocomplete="off" role="search">
+          <span class="lens-ico" aria-hidden="true">✦</span>
+          <input id="lensIn" type="text" maxlength="30000" placeholder="Paste a YouTube link or a claim, name a product to build, or say what to study…" aria-label="Ask Verity: paste a link, a claim, a product or a topic">
+          <button class="btn primary lens-go" id="lensGo" type="submit">Go <kbd>↵</kbd></button>
+        </form>
+        <div class="lens-routes" id="lensRoutes" role="group" aria-label="What Verity will do with it"></div>
+        <div class="trio">
+          <article class="tri-card tri-fact" id="factPromo" aria-label="Fact check">
+            <div class="tri-top"><span class="tri-ico" aria-hidden="true"><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8 7.5 9.5 4.4-1.5 7.5-4.9 7.5-9.5V6z"/><path d="m8.6 12 2.4 2.4 4.5-4.8"/></svg></span><div class="tri-name"><h4>Fact check</h4><small id="factCount">Every claim, a verdict</small></div></div>
+            <div class="tri-intro">Verify claims before you trust or share them.</div>
+            <ul class="tri-properties"><li>Claim-by-claim verdicts</li><li>Evidence and source links</li><li>True, false and opinion labels</li></ul>
+            <div class="tri-live" data-live="fact"></div>
+            <div class="tri-act"><button type="button" class="btn primary" data-factway="video">▶ YouTube link</button><button type="button" class="btn" data-factway="text">✎ Paste text</button></div>
+            <small class="tri-tip">Or highlight text in any note and press Fact check.</small>
+          </article>
+          <article class="tri-card tri-src" id="srcPromo" aria-label="Sourcing advisor">
+            <div class="tri-top"><span class="tri-ico" aria-hidden="true"><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.2v9.6L12 21l-8-4.2V7.2z"/><path d="m4 7.2 8 4.3 8-4.3M12 11.5V21"/></svg></span><div class="tri-name"><h4>Sourcing advisor</h4><small id="srcCount">Parts, sellers, total cost</small></div></div>
+            <div class="tri-intro">Turn a product idea into a practical build plan.</div>
+            <ul class="tri-properties"><li>Required parts and specifications</li><li>Seller and price comparisons</li><li>Estimated total build cost</li></ul>
+            <div class="tri-live" data-live="src"></div>
+            <div class="tri-input"><input id="srcQuick" type="text" maxlength="80" placeholder="What are you making? e.g. smart watch" aria-label="Product to find parts for" autocomplete="off"><button type="button" class="btn primary" data-srcgo="1">Find parts</button></div>
+            <div class="tri-chips"><button type="button" data-srcex="Smart watch">⌚ Smart watch</button><button type="button" data-srcex="Quadcopter drone">🚁 Quadcopter drone</button></div>
+          </article>
+          <article class="tri-card tri-stu" id="stuPromo" aria-label="Study"></article>
+        </div>
+      </div>
+      <div class="dash-wrap">
+        <div class="dash-sec"><h4 id="recentHeading">Pick up where you left off</h4><span class="dash-sub">Hover a note for one-tap <b><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8 7.5 9.5 4.4-1.5 7.5-4.9 7.5-9.5V6z"/><path d="m8.6 12 2.4 2.4 4.5-4.8"/></svg></b> fact check · <b><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.2v9.6L12 21l-8-4.2V7.2z"/><path d="m4 7.2 8 4.3 8-4.3M12 11.5V21"/></svg></b> find parts · <b><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-4.5L21 9l-9 4.5z"/><path d="M7 11.2v4.3c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-4.3M21 9v5"/></svg></b> flashcards</span></div>
+        <div class="recent" id="recent"></div>
+      </div>
+      <div class="map-wrap">
+        <div class="dash-sec"><h4>Knowledge map</h4><span class="dash-sub">Every folder and note, connected. Drag, file, explore.</span></div>
+        <div class="map-card" id="mapCard">
+          <div class="map-tools">
+            <input id="mapSearch" type="search" placeholder="Find on the map…" aria-label="Find on the map" autocomplete="off">
+            <span class="map-btns"><button type="button" class="btn" id="mapOut" aria-label="Zoom out">−</button><button type="button" class="btn" id="mapIn" aria-label="Zoom in">+</button><button type="button" class="btn" id="mapFit">Fit</button><button type="button" class="btn" id="mapFold" title="Minimise or unfold every folder">▾ Fold all</button><button type="button" class="btn" id="mapTidy" title="Spread out anything that overlaps">Tidy</button><button type="button" class="btn" id="mapLinks" aria-pressed="false" title="Show how your notes connect through shared ideas">🔗 Links</button><button type="button" class="btn" id="mapReset" title="Put everything back in its default place">Reset</button><button type="button" class="btn" id="mapFull">⤢ Full screen</button></span>
+          </div>
+          <div class="map-view" id="mapView" role="group" aria-label="Knowledge map of your folders and notes">
+            <div class="map-world" id="mapWorld"></div>
+            <p class="map-empty hide" id="mapEmpty">Your map appears here once you write a note or make a folder.</p>
+          </div>
+          <p class="map-hint">Click a note to read it right here · double-click to edit · click a folder to minimise it, ⤢ to open it as a board · drag a note onto a folder to file it · 🔗 Links shows how notes connect · Ctrl + scroll to zoom</p>
+        </div>
+      </div>
+      <div class="home-inner">
+        <details class="ai-card maker" id="aiMaker">
+          <summary class="maker-sum"><span class="maker-ico" aria-hidden="true">✨</span><span class="maker-copy"><b>Turn text into notes</b><small>Paste an article or lecture notes and Verity files it into a folder of notes.</small></span><span class="maker-cta">Paste text</span></summary>
+          <div class="maker-body">
+            <textarea id="aiSource" maxlength="14000" placeholder="Paste your text here…" aria-label="Text to turn into notes"></textarea>
+            <div class="ai-card-foot"><span id="aiSourceCount">0 / 14,000</span><span id="aiMakeStatus" role="status"></span><button class="btn primary" id="aiMake" type="button">✨ Make folder &amp; notes</button></div>
+          </div>
+        </details>
+        <div class="home-quick"><button class="btn" id="new2" type="button">Write a blank note</button><button class="btn" id="newFolder2" type="button">New folder</button></div>
+        <p class="home-about"><a href="index.html">About Verity</a> · Notes are saved in this browser only.</p>
+      </div>
+    </section>
+    <div class="bar" id="bar" role="toolbar" aria-label="Formatting">
+      <button class="tb back" id="back">&lsaquo; Notes</button>
+      <button class="tb fmt-toggle" id="fmtToggle" type="button" aria-expanded="false" aria-controls="fmtRow" title="Show or hide formatting tools"><svg class="i" viewBox="0 0 24 24"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg>Format <span class="ai-chevron">▾</span></button>
+      <span class="sep"></span>
+      <details class="ai-menu media-menu" id="mediaMenu">
+        <summary class="tb media-trigger" title="Attach photos, audio, video, files or a YouTube link"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></svg>Attach <span class="ai-chevron">▾</span></summary>
+        <div class="ai-dropdown">
+          <button class="ai-menu-item" type="button" data-media-pick="image"><span class="ai-item-icon">🖼</span><span class="ai-item-copy"><strong>Photo</strong><small>JPG, PNG, GIF, WebP</small></span></button>
+          <button class="ai-menu-item" type="button" data-media-pick="audio"><span class="ai-item-icon">🎧</span><span class="ai-item-copy"><strong>Audio</strong><small>MP3, WAV, M4A…</small></span></button>
+          <button class="ai-menu-item" type="button" data-media-pick="video"><span class="ai-item-icon">🎬</span><span class="ai-item-copy"><strong>Video</strong><small>MP4, WebM, MOV…</small></span></button>
+          <button class="ai-menu-item" type="button" data-media-pick="file"><span class="ai-item-icon">📎</span><span class="ai-item-copy"><strong>File</strong><small>PDF, Word, Excel, ZIP, anything</small></span></button>
+          <button class="ai-menu-item" type="button" id="mediaYouTube"><span class="ai-item-icon">▶</span><span class="ai-item-copy"><strong>YouTube link</strong><small>Shows the title and a player</small></span></button>
+        </div>
+      </details>
+      <span class="dict-wrap" id="dictWrap">
+        <button class="tb dict-btn" id="dictBtn" type="button" aria-pressed="false" title="Dictate: speak and Verity types it into your note"><svg class="i" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span class="dict-lbl">Dictate</span></button>
+        <select class="dict-lang" id="dictLang" aria-label="Dictation language" title="Language you will speak in">
+          <option value="en-IN">English</option>
+          <option value="hi-IN">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368; (Hindi)</option>
+          <option value="hinglish">Hinglish (Hindi + English)</option>
+          <option value="ta-IN">&#2980;&#2990;&#3007;&#2996;&#3021; (Tamil)</option>
+        </select>
+      </span>
+      <details class="ai-menu" id="aiMenu">
+        <summary class="tb ai-menu-trigger">✨ AI Features <span class="ai-chevron">▾</span></summary>
+        <div class="ai-dropdown">
+          <button class="ai-menu-item" id="aiFix" type="button" title="Fix spelling and grammar in selected text or the whole note"><span class="ai-item-icon">✓</span><span class="ai-item-copy"><strong>Fix text</strong><small>Correct spelling and grammar</small></span></button>
+          <button class="ai-menu-item" id="aiImprove" type="button" title="Improve clarity and flow in selected text or the whole note"><span class="ai-item-icon">✦</span><span class="ai-item-copy"><strong>Improve writing</strong><small>Make text clearer and smoother</small></span></button>
+          <button class="ai-menu-item" id="aiSummary" type="button" title="Generate a summary of the current note"><span class="ai-item-icon">≡</span><span class="ai-item-copy"><strong>Summarize</strong><small>Create a concise summary</small></span></button>
+        </div>
+      </details>
+      <div class="ai-tools-row" id="aiToolsMenu" role="group" aria-label="AI tools">
+        <button class="tb ai-menu-trigger ai-tool-btn" id="aiFact" type="button" title="Fact check a YouTube link, text you type, or text you highlight in this note"><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8 7.5 9.5 4.4-1.5 7.5-4.9 7.5-9.5V6z"/><path d="m8.6 12 2.4 2.4 4.5-4.8"/></svg> Fact check</button>
+        <button class="tb ai-menu-trigger ai-tool-btn" id="aiSourcing" type="button" title="Type a product and see real sellers, live prices and stock for each part"><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.2v9.6L12 21l-8-4.2V7.2z"/><path d="m4 7.2 8 4.3 8-4.3M12 11.5V21"/></svg> Sourcing advisor <span class="new-pill" id="srcNewPill">New</span></button>
+      </div>
+      <button class="tb ai-menu-trigger ai-tool-btn" id="aiStudy" type="button" title="Turn this note into a quiz and flashcards, and review what is due"><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-4.5L21 9l-9 4.5z"/><path d="M7 11.2v4.3c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-4.3M21 9v5"/></svg> Study <span class="due-pill hide" id="stuDue"></span></button>
+      <div class="bar-end">
+        <button class="tb bar-btn" id="starBtn" type="button" aria-pressed="false" title="Star this note"><span class="star-ic" aria-hidden="true">&#9734;</span><span class="star-lbl">Star</span></button>
+        <button class="tb bar-btn" id="shareBtn" type="button" title="Share this note"><svg class="i" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>Share</button>
+      </div>
+      <div class="fmt-row hide" id="fmtRow" role="group" aria-label="Formatting tools">
+      <button class="tb" data-cmd="bold" title="Bold (Ctrl+B)"><b>B</b></button>
+      <button class="tb" data-cmd="italic" title="Italic (Ctrl+I)"><i>I</i></button>
+      <button class="tb" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>
+      <button class="tb" data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
+      <button class="tb mk" data-cmd="mark" title="Highlight">Highlight</button>
+      <span class="sep"></span>
+      <button class="tb" data-block="h1" title="Large heading">H1</button>
+      <button class="tb" data-block="h2" title="Small heading">H2</button>
+      <button class="tb" data-block="p" title="Normal text">Text</button>
+      <span class="sep"></span>
+      <button class="tb" data-cmd="insertUnorderedList" title="Bulleted list">&bull; List</button>
+      <button class="tb" data-cmd="insertOrderedList" title="Numbered list">1. List</button>
+      <button class="tb" data-block="blockquote" title="Quote">Quote</button>
+      <button class="tb" data-block="pre" title="Code block">Code</button>
+      <span class="sep"></span>
+      <button class="tb" id="linkBtn" title="Add link">Link</button>
+      <button class="tb" data-cmd="removeFormat" title="Clear formatting">Clear</button>
+      </div>
+    </div>
+    <div class="link-box" id="linkBox">
+      <input id="linkUrl" type="url" placeholder="Paste a link, like https://example.com" aria-label="Link address">
+      <button class="btn primary" id="linkOk">Add link</button>
+      <button class="btn" id="linkNo">Cancel</button>
+    </div>
+    <div class="doc" id="doc"><div class="page">
+      <input class="title" id="title" placeholder="Untitled note" aria-label="Note title">
+      <div id="ed" contenteditable="true" spellcheck="false" autocorrect="off" autocomplete="off" autocapitalize="off" data-ph="Start writing… or type / to use AI tools" aria-label="Note body"></div>
+    </div></div>
+    <div class="status"><span id="stat">Saved</span><div class="status-actions"><label class="move-label" for="moveFolder">Folder</label><select id="moveFolder" aria-label="Move note to folder"><option value="">Unfiled</option></select><button class="del" id="del">Delete note</button></div></div>
+  </main>
+</div>
+<div class="yt-drawer hide" id="ytDrawer" role="dialog" aria-modal="true" aria-labelledby="ytDrawerTitle">
+  <div class="yt-backdrop" data-close="1"></div>
+  <section class="yt-panel">
+    <header class="yt-head">
+      <div class="yt-head-copy"><span class="yt-badge" id="ytBadge">Fact check</span><h2 id="ytDrawerTitle">Fact check</h2><a id="ytDrawerLink" class="hide" href="#" target="_blank" rel="noopener noreferrer">Open on YouTube ↗</a></div>
+      <button class="icon-btn" id="ytDrawerClose" type="button" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </header>
+    <div class="fc-input hide" id="fcInput">
+      <div class="fc-tabs" role="tablist" aria-label="What to fact check">
+        <button type="button" role="tab" class="on" data-fctab="video">YouTube link</button>
+        <button type="button" role="tab" data-fctab="text">Write or paste text</button>
+      </div>
+      <div class="fc-pane" data-fcpane="video">
+        <input id="fcLink" type="url" placeholder="Paste a YouTube link, like https://youtu.be/…" aria-label="YouTube link" autocomplete="off">
+        <button class="btn primary" id="fcRunVideo" type="button">Fact check video</button>
+      </div>
+      <div class="fc-pane hide" data-fcpane="text">
+        <textarea id="fcText" maxlength="30000" placeholder="Type or paste the text you want fact checked…" aria-label="Text to fact check"></textarea>
+        <div class="fc-pane-foot"><span id="fcCount">0 / 30,000</span><button class="btn primary" id="fcRunText" type="button">Fact check text</button></div>
+      </div>
+      <p class="yt-fine" style="margin:8px 0 0">Tip: highlight text in a note and press the Fact check button that appears to check just that passage.</p>
+    </div>
+    <div class="yt-actions" id="ytActions"><button class="btn" id="ytRunRel" type="button">Check title relevance</button><button class="btn primary" id="ytRunFact" type="button">Fact check</button><button class="btn" id="fcNew" type="button">New check</button><button class="btn" id="ytSaveNote" type="button">Add to note</button></div>
+    <div id="ytAddPanel" class="yt-add hide"></div>
+    <div id="ytStatus" class="yt-status" role="status"></div>
+    <div class="yt-body" id="ytBody"></div>
+  </section>
+</div>
+<div class="yt-drawer hide" id="srcDrawer" role="dialog" aria-modal="true" aria-labelledby="srcTitle">
+  <div class="yt-backdrop" id="srcBackdrop"></div>
+  <section class="yt-panel">
+    <header class="yt-head">
+      <div class="yt-head-copy"><span class="yt-badge">AI Tools</span><h2 id="srcTitle">Sourcing advisor</h2><p class="src-sub">Type a product. Verity lists the parts needed to build one, then finds real store prices and sellers for each part.</p></div>
+      <button class="icon-btn" id="srcClose" type="button" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </header>
+    <div class="src-scroll" id="srcScroll">
+    <div class="src-input" id="srcInputBox">
+      <div id="srcProductBox">
+      <label class="src-label" for="srcProduct">What do you want to build?</label>
+      <div class="src-row"><input id="srcProduct" type="text" maxlength="120" placeholder="e.g. smart watch, quadcopter drone, electric bicycle" autocomplete="off"><button class="btn primary" id="srcGo" type="button">Find suppliers</button></div>
+      <div class="src-chips" id="srcChips"><span>Try:</span><button type="button" data-ex="Smart watch">Smart watch</button><button type="button" data-ex="Quadcopter drone">Quadcopter drone</button><button type="button" data-ex="Electric bicycle">Electric bicycle</button><button type="button" data-ex="Bluetooth speaker">Bluetooth speaker</button></div>
+      </div>
+      <label class="src-label" for="srcUnits">How many units will you build? <small>(totals update instantly)</small></label>
+      <input id="srcUnits" class="src-units" type="number" min="1" max="100000" value="1" inputmode="numeric">
+    </div>
+    <div class="yt-actions hide" id="srcActions">
+      <button class="btn" id="srcNew" type="button">New search</button>
+      <button class="btn" id="srcCsv" type="button" title="One row per part, with the best seller, price and cost. Opens in Excel or Google Sheets.">⬇ CSV: best picks</button>
+      <button class="btn" id="srcCsvAll" type="button" title="Every seller quote for every part, one row each.">⬇ CSV: all quotes</button>
+      <div class="src-keep"><span class="src-label" style="margin:0">Add to note as</span>
+        <div class="fc-tabs" id="srcLevel" role="tablist" aria-label="Detail level for notes" style="margin:0">
+          <button type="button" data-srclvl="summary">Summary</button><button type="button" data-srclvl="detailed" class="on">Table</button><button type="button" data-srclvl="full">Table + all quotes</button>
+        </div>
+        <button class="btn primary" id="srcAdd" type="button">Add to this note</button><button class="btn" id="srcSaveNew" type="button">Save as new note</button>
+      </div>
+    </div>
+    <div id="srcStatus" class="yt-status" role="status"></div>
+    <div class="yt-body" id="srcBody"></div>
+    </div>
+  </section>
+</div>
+<div class="nudge hide" id="nudge" role="status"><span class="nudge-ico" id="nudgeIco" aria-hidden="true">✨</span><span class="nudge-msg" id="nudgeMsg"></span><button class="btn primary" id="nudgeGo" type="button"></button><button class="icon-btn" id="nudgeX" type="button" aria-label="Dismiss"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<button type="button" class="fc-pill hide" id="stuPill"><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-4.5L21 9l-9 4.5z"/><path d="M7 11.2v4.3c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-4.3M21 9v5"/></svg> Flashcards</button>
+<div class="yt-drawer hide" id="stuDrawer" role="dialog" aria-modal="true" aria-labelledby="stuTitle">
+  <div class="yt-backdrop" id="stuBackdrop"></div>
+  <section class="yt-panel">
+    <header class="yt-head">
+      <div class="yt-head-copy"><span class="yt-badge">Study</span><h2 id="stuTitle">Quiz &amp; flashcards</h2><p class="src-sub">Turn a note into questions. Cards you miss come back sooner, cards you know come back later.</p></div>
+      <button class="icon-btn" id="stuClose" type="button" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </header>
+    <div id="stuStatus" class="yt-status" role="status"></div>
+    <div class="yt-body" id="stuBody"></div>
+  </section>
+</div>
+<input type="file" id="mediaFile" multiple hidden>
+<button type="button" class="fc-pill hide" id="trPill">🌐 Translate</button>
+<div class="tr-pop hide" id="trPop" role="dialog" aria-label="Translate selected text">
+  <label class="tr-lbl" for="trLang">Translate to</label>
+  <select id="trLang" class="tr-sel"></select>
+  <button type="button" class="btn primary tr-go" id="trGo">Translate</button>
+  <button type="button" class="icon-btn tr-x" id="trX" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+</div>
+<button type="button" class="fc-pill hide" id="fcPill"><svg class="tic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8 7.5 9.5 4.4-1.5 7.5-4.9 7.5-9.5V6z"/><path d="m8.6 12 2.4 2.4 4.5-4.8"/></svg> Fact check</button>
+<div class="dict-live hide" id="dictLive" role="status" aria-live="polite"><span class="dict-dot" aria-hidden="true"></span><span class="dict-text" id="dictLiveText"></span><button type="button" class="btn" id="dictStop">Stop</button></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="modal-backdrop hide" id="folderModal" role="dialog" aria-modal="true" aria-labelledby="folderModalTitle">
+  <section class="folder-modal-panel">
+    <div class="folder-modal-icon" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+    <h2 id="folderModalTitle">Create a folder</h2>
+    <p id="folderModalText">Give your notes a place to belong.</p>
+    <form id="folderForm">
+      <label for="folderNameInput" id="folderNameLabel">Folder name</label>
+      <input id="folderNameInput" maxlength="40" type="text" placeholder="e.g. College, Ideas, Projects" autocomplete="off" required>
+      <div class="folder-modal-actions"><button class="btn" id="folderCancel" type="button">Cancel</button><button class="btn primary" type="submit" id="folderSubmit">Create folder</button></div>
+      <div id="folderNameError" class="folder-name-error" role="status"></div>
+    </form>
+  </section>
+</div>
+
+<div class="modal-backdrop hide" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsHeading">
+  <section class="settings-panel">
+    <div class="settings-head"><div><h2 id="settingsHeading">AI settings</h2><p>Switch AI features on or off. Autocorrect and word prediction work without AI.</p></div><button class="btn" id="settingsClose" aria-label="Close settings">Close</button></div>
+    <label class="ai-toggle" for="aiOffToggle"><span class="ai-toggle-copy"><b>Turn off all AI features</b><small>Hides everything that calls the Groq API: AI notes, Fix / Improve / Summarize, Fact check and smarter suggestions. Autocorrect and word prediction keep working because they run on your device.</small></span><input type="checkbox" id="aiOffToggle" role="switch"><i class="switch" aria-hidden="true"></i></label>
+    <div class="ai-limits" id="aiLimitBox"></div>
+    <p class="settings-help">Verity uses the Groq keys listed in <b>js/keys.js</b> (it tries the next key if one hits its limit) and the model <b>openai/gpt-oss-120b</b>. Nothing is typed or stored here. Verity sends nearby writing context to Groq for ghost-text suggestions, checks completed words for obvious typos, and sends selected text or a note when you use an AI writing action.</p>
+    <div class="settings-actions"><span id="aiSettingsStatus" role="status"></span><button class="btn" id="testGroq">Test connection</button></div>
+  </section>
+</div>
+<div class="modal-backdrop hide" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareHeading">
+  <section class="settings-panel share-panel">
+    <div class="settings-head"><div><h2 id="shareHeading">Share note</h2><p id="shareName"></p></div><button class="btn" id="shareClose" type="button" aria-label="Close sharing">Close</button></div>
+    <div class="share-pdf"><button class="btn primary" id="sharePdf" type="button">Save as PDF</button><span>Opens your browser's print window. Choose &ldquo;Save as PDF&rdquo;, then send the file anywhere.</span></div>
+    <label for="shareLink">Or send a link: anyone who opens it can read a copy of this note</label>
+    <div class="share-row"><input id="shareLink" type="text" readonly aria-label="Share link"><button class="btn primary" id="shareCopyLink" type="button">Copy link</button></div>
+    <p class="share-hint" id="shareHint" role="status"></p>
+    <div class="share-actions">
+      <button class="btn" id="shareNative" type="button">Share&hellip;</button>
+      <button class="btn" id="shareCopyText" type="button">Copy text</button>
+      <button class="btn" id="shareDownload" type="button">Download .html</button>
+    </div>
+    <p class="settings-help">The link contains the note itself, so nothing is uploaded anywhere. People who open it get a read-only copy and can save it to their own notes. Later edits you make are not sent to them; share again to send a new version.</p>
+  </section>
+</div>
+
+<div class="modal-backdrop hide" id="sharedView" role="dialog" aria-modal="true" aria-labelledby="sharedTitle">
+  <section class="settings-panel shared-panel">
+    <p class="eyebrow">Shared note &middot; read only</p>
+    <h2 id="sharedTitle" class="shared-title"></h2>
+    <div class="shared-body" id="sharedBody"></div>
+    <div class="settings-actions"><span id="sharedStatus" role="status"></span><button class="btn" id="sharedClose" type="button">Close</button><button class="btn primary" id="sharedSave" type="button">Save a copy to my notes</button></div>
+  </section>
+</div>
+
+<script src="js/groq-shim.js"></script>
+<script src="js/keys.js"></script>
+<script src="js/words.js?v=33.3"></script>
+<script src="js/app.js?v=33.3"></script>
+</body>
+</html>

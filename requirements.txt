@@ -1,0 +1,6 @@
+# Needed for the YouTube tools (transcript, title relevance, fact-check)
+youtube-transcript-api
+
+# Optional: embedding-based title relevance (large download, includes PyTorch).
+# Without it, Verity asks the Groq model to judge relevance instead.
+# sentence-transformers

@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Try with your document · Govt Document Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e16;--surf:#111826;--surf2:#0d131e;--line:#243047;--ink:#eef2fa;--muted:#9aa7bf;--green:#4cc38a;--blue:#7aa2ff;--warn:#e5b94b;--bad:#ef6b73}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:"Public Sans",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(800px 420px at 20% -5%,rgba(76,195,138,.16),transparent 60%),radial-gradient(700px 420px at 85% 0,rgba(122,162,255,.14),transparent 60%)}
+.wrap{max-width:760px;margin:0 auto;padding:0 22px 40px}
+/* track switch */
+.tracks{display:flex;justify-content:center;padding:18px 0 0}
+.tr{display:flex;width:100%;max-width:560px;border:1px solid var(--line);border-radius:16px;background:var(--surf);overflow:hidden}
+.tr a{flex:1;display:flex;flex-direction:column;gap:2px;padding:11px 16px;text-decoration:none;color:var(--muted);font-size:15px;font-weight:700;line-height:1.2}
+.tr a small{font-size:11.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;opacity:.85}
+.tr a.on{color:#07101c;background:linear-gradient(90deg,#86e0b3,#8fb0ff)}
+.tr a:not(.on):hover{color:var(--ink);background:rgba(122,162,255,.08)}
+.tr a+a{border-left:1px solid var(--line);text-align:right;align-items:flex-end}
+@media(max-width:480px){.tr a{padding:10px 12px;font-size:14px}}
+.back{display:inline-block;margin:26px 0 0;color:var(--muted);text-decoration:none;font-size:14px}
+.back:hover{color:var(--ink)}
+h1{font-family:Literata,serif;font-size:clamp(28px,5.5vw,40px);line-height:1.15;margin:10px 0 8px;letter-spacing:-.4px}
+.lead{color:var(--muted);margin:0 0 22px}
+.box{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+.box h2{margin:0 0 12px;font-size:16px;display:flex;align-items:center;gap:10px}
+.n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:rgba(122,162,255,.18);color:var(--blue);font-weight:800;font-size:13px}
+textarea{width:100%;font:inherit;color:var(--ink);background:var(--surf2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;resize:vertical}
+textarea:focus{outline:2px solid rgba(122,162,255,.5);outline-offset:1px}
+#doc{min-height:190px}
+#q{min-height:64px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.pbtn{font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:8px 14px;cursor:pointer}
+.pbtn:hover{border-color:var(--blue)}
+.meta{font-size:13px;color:var(--muted);margin:8px 2px 0;min-height:19px}
+.meta.warn{color:var(--warn)}
+.btn{font:inherit;font-weight:700;font-size:16px;border:0;cursor:pointer;border-radius:14px;padding:13px 28px;color:#07101c;background:linear-gradient(90deg,#86e0b3,#8fb0ff);box-shadow:0 10px 30px rgba(122,162,255,.22)}
+.btn:hover{filter:brightness(1.07)}
+.btn[disabled]{opacity:.55;cursor:wait}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+.chip{font:inherit;font-size:13.5px;color:var(--muted);background:none;border:1px dashed var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
+.chip:hover{color:var(--ink);border-color:var(--blue)}
+#msg{min-height:22px;margin:14px 2px 0;font-size:14px;color:var(--muted)}
+#msg.err{color:var(--bad)}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px}
+.card.tuned{border-color:rgba(76,195,138,.55)}
+.card h3{margin:0 0 10px;font-size:14px;font-weight:600;color:var(--muted)}
+.st{display:inline-block;font-size:13px;font-weight:800;padding:3px 11px;border-radius:999px;color:#07101c}
+.st.ok{background:var(--green)}.st.nf{background:var(--warn)}.st.err{background:var(--bad);color:#fff}
+.ans{font-size:19px;font-weight:600;margin:12px 0 6px;white-space:pre-wrap}
+.ans.dim{font-size:16px;font-weight:500;color:var(--muted)}
+.qv{font-size:13.5px;color:var(--green)}.qv.bad{color:var(--bad)}
+.fine{font-size:13px;color:var(--muted)}
+details{margin-top:16px}
+summary{cursor:pointer;color:var(--muted);font-size:14px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary:before{content:"▸ "}
+details[open] summary:before{content:"▾ "}
+summary:hover{color:var(--ink)}
+.pass{margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surf);font-size:14px;white-space:pre-wrap;color:#cfd8ea}
+.pass b{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px}
+.pass mark{background:rgba(229,185,75,.38);color:#fff;border-radius:3px;padding:0 2px}
+.foot{text-align:center;color:var(--muted);font-size:13px;margin:26px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tracks">
+    <nav class="tr" aria-label="Project tracks">
+      <a class="on" href="/" aria-current="page"><small>LLM Track</small>Govt Document Assistant</a>
+      <a href="verity"><small>Freshers Track</small>Verity &rarr;</a>
+    </nav>
+  </div>
+
+  <a class="back" href="/">&larr; Back</a>
+  <h1>Try it with your document</h1>
+  <p class="lead">Add any text document, then ask a question. Our local model answers only from your document, or says &ldquo;not found&rdquo;.</p>
+
+  <section class="box">
+    <h2><span class="n">1</span> Your document</h2>
+    <div class="row">
+      <button class="pbtn" id="upBtn" type="button">&#8679; Upload file</button>
+      <button class="pbtn" id="sampleBtn" type="button">Use a sample document</button>
+      <button class="pbtn" id="clearBtn" type="button">Clear</button>
+      <input type="file" id="file" accept=".txt,.md,.csv,.json,.html,.htm,.pdf,text/*,application/pdf" hidden>
+    </div>
+    <textarea id="doc" placeholder="Paste your document text here, or upload a .txt, .md or .pdf file. Hindi, Hinglish and English all work."></textarea>
+    <div class="meta" id="docMeta">No document yet.</div>
+  </section>
+
+  <section class="box">
+    <h2><span class="n">2</span> Your question</h2>
+    <div class="chips" id="chips" hidden></div>
+    <textarea id="q" maxlength="1000" placeholder="Ask in Hindi, Hinglish or English"></textarea>
+    <div class="row" style="margin:12px 0 0">
+      <button class="btn" id="go" type="button">Ask</button>
+    </div>
+    <div id="msg" role="status"></div>
+  </section>
+
+  <div class="res" id="res"></div>
+  <details id="passBox" hidden open>
+    <summary>Passages used from your document</summary>
+    <p class="fine" style="margin:8px 0 0">Highlighted text is the exact quoted line. Retrieval is keyword-based (BM25).</p>
+    <div id="pass"></div>
+  </details>
+
+  <p class="foot">Your text is used only to answer this question and is not saved by our server. A verified quote proves it exists in your document, not that the answer is right.</p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var MAX_BYTES = 250000;
+  var PDFJS = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
+  var SAMPLE = [
+    "State Merit Scholarship 2027 (fictional sample document)",
+    "",
+    "Who can apply. The scholarship is open to students who are residents of the state and are studying in a recognised college. The age of the applicant must not be more than 25 years on 1 January 2027.",
+    "",
+    "Family income. The total annual income of the applicant's family must not exceed Rs 3,00,000.",
+    "",
+    "Amount. Selected students receive Rs 12,000 per year, paid directly into the student's bank account.",
+    "",
+    "How to apply. Applications are accepted only on the state scholarship portal. The last date to apply is 15 March 2027. Applications received after this date will not be considered.",
+    "",
+    "Documents. Upload an income certificate, a residence certificate, the previous year's marksheet and a bank passbook copy.",
+    "",
+    "हिंदी सार: आवेदन की अंतिम तिथि 15 मार्च 2027 है। आवेदन केवल राज्य छात्रवृत्ति पोर्टल पर स्वीकार किए जाएँगे।"
+  ].join("\n");
+  var SAMPLE_Q = ["What is the last date to apply?", "Is there an age limit?", "Scholarship ki amount kitni hai?", "When is the interview?"];
+  var info = null, busy = false;
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function bytes(s) { return new TextEncoder().encode(s).length; }
+
+  function setMeta(text, warn) {
+    var m = $("docMeta"); m.textContent = text; m.className = "meta" + (warn ? " warn" : "");
+  }
+  function updateMeta(extra) {
+    var t = $("doc").value;
+    if (!t.trim()) { setMeta(extra || "No document yet."); return; }
+    var b = bytes(t);
+    if (b > MAX_BYTES) { setMeta("Too long (" + Math.round(b / 1000) + " KB). Only the first " + Math.round(MAX_BYTES / 1000) + " KB will be used.", true); return; }
+    setMeta((extra ? extra + " · " : "") + t.length.toLocaleString() + " characters");
+  }
+  function clip(text) {
+    var n = 0;
+    while (bytes(text) > MAX_BYTES && n < 40) { text = text.slice(0, Math.floor(text.length * 0.92)); n++; }
+    return text;
+  }
+  function setDoc(text, note) {
+    var cut = bytes(text) > MAX_BYTES;
+    $("doc").value = cut ? clip(text) : text;
+    updateMeta(note);
+    if (cut) setMeta("File was longer than " + Math.round(MAX_BYTES / 1000) + " KB, so only the first part is used.", true);
+  }
+
+  /* ---------- file reading ---------- */
+  function loadPdfJs() {
+    return new Promise(function (resolve, reject) {
+      if (window.pdfjsLib) return resolve();
+      var s = document.createElement("script");
+      s.src = PDFJS + "pdf.min.js";
+      s.onload = function () { window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + "pdf.worker.min.js"; resolve(); };
+      s.onerror = function () { reject(new Error("pdf.js could not be loaded")); };
+      document.head.appendChild(s);
+    });
+  }
+  function readPdf(file) {
+    setMeta("Reading PDF…");
+    return loadPdfJs().then(function () { return file.arrayBuffer(); }).then(function (buf) {
+      return window.pdfjsLib.getDocument({ data: buf }).promise;
+    }).then(function (pdf) {
+      var pages = [], p = Promise.resolve(), total = Math.min(pdf.numPages, 300);
+      for (var i = 1; i <= total; i++) (function (n) {
+        p = p.then(function () { return pdf.getPage(n); }).then(function (pg) { return pg.getTextContent(); }).then(function (tc) {
+          pages.push(tc.items.map(function (it) { return it.str; }).join(" ").replace(/[ \t]+/g, " ").trim());
+        });
+      })(i);
+      return p.then(function () { return pages.filter(Boolean).join("\n\n"); });
+    }).then(function (text) {
+      if (text.replace(/\s/g, "").length < 20) { setMeta("No selectable text found in this PDF (it may be a scan). Please paste the text instead.", true); return; }
+      setDoc(text, file.name);
+    }).catch(function () {
+      setMeta("Could not read this PDF. Please paste the text instead.", true);
+    });
+  }
+  function readText(file, isHtml) {
+    var r = new FileReader();
+    r.onload = function () {
+      var t = String(r.result || "");
+      if (isHtml) {
+        try { var d = new DOMParser().parseFromString(t, "text/html"); d.querySelectorAll("script,style").forEach(function (x) { x.remove(); }); t = d.body ? d.body.textContent : t; } catch (e) {}
+      }
+      var bad = (t.match(/�/g) || []).length;
+      if (bad > 20 && bad > t.length / 50) { setMeta("This file does not look like plain text. Use .txt, .md, .pdf or paste the text.", true); return; }
+      if (!t.trim()) { setMeta("The file is empty.", true); return; }
+      setDoc(t, file.name);
+    };
+    r.onerror = function () { setMeta("Could not read the file.", true); };
+    r.readAsText(file);
+  }
+  function onFile(file) {
+    if (!file) return;
+    var n = file.name.toLowerCase();
+    if (/\.(docx?|pptx?|xlsx?)$/.test(n)) { setMeta("Word/Excel/PowerPoint files are not supported yet. Save as PDF or paste the text.", true); return; }
+    if (/\.pdf$/.test(n) || file.type === "application/pdf") return readPdf(file);
+    readText(file, /\.html?$/.test(n));
+  }
+
+  /* ---------- results ---------- */
+  function label(k) {
+    if (info && info.models && info.models[k]) return info.models[k].label;
+    return k === "curated" ? "Fine-tuned (curated data)" : (k === "base" ? "Base Qwen2.5-3B" : k);
+  }
+  function highlighted(box, text, quote) {
+    var i = quote ? text.indexOf(quote) : -1;
+    if (i < 0) { box.appendChild(document.createTextNode(text)); return; }
+    box.appendChild(document.createTextNode(text.slice(0, i)));
+    box.appendChild(el("mark", null, quote));
+    box.appendChild(document.createTextNode(text.slice(i + quote.length)));
+  }
+  function card(k, r) {
+    var c = el("div", "card" + (k === "curated" ? " tuned" : ""));
+    c.appendChild(el("h3", null, label(k)));
+    if (r.error) {
+      c.appendChild(el("span", "st err", r.error === "not_connected" ? "Model not connected" : "Model unreachable"));
+      c.appendChild(el("p", "fine", r.message || r.error));
+      return c;
+    }
+    var found = r.status === "answered";
+    c.appendChild(el("span", "st " + (found ? "ok" : "nf"), found ? "Answered" : "Not found in your document"));
+    var txt = r.answer || "";
+    if (!found || /^\s*not[_ ]?found\s*$/i.test(txt)) txt = "Your document does not say this.";
+    c.appendChild(el("p", "ans" + (found ? "" : " dim"), txt));
+    if (found) {
+      c.appendChild(el("div", "qv" + (r.quote_valid ? "" : " bad"),
+        r.quote_valid ? "✓ Quote verified in your document" : "Quote NOT found in the passages"));
+    }
+    return c;
+  }
+  function render(d) {
+    var res = $("res"); res.textContent = "";
+    var keys = Object.keys(d.results);
+    var allNoPass = keys.length && keys.every(function (k) { return d.results[k].error === "no_passages"; });
+    if (allNoPass) {
+      $("msg").textContent = "No passage in your document matches this question. Try different words.";
+      $("passBox").hidden = true;
+      return;
+    }
+    var order = ["curated", "base"].filter(function (k) { return d.results[k]; });
+    keys.forEach(function (k) { if (order.indexOf(k) < 0) order.push(k); });
+    order.forEach(function (k) { res.appendChild(card(k, d.results[k])); });
+    var quotes = [];
+    keys.forEach(function (k) { var r = d.results[k]; if (r && r.evidence_quote) quotes.push(r.evidence_quote); });
+    var pass = $("pass"); pass.textContent = "";
+    (d.chunks || []).forEach(function (c) {
+      var p = el("div", "pass");
+      p.appendChild(el("b", null, c.chunk_id));
+      var q = quotes.filter(function (x) { return c.text.indexOf(x) >= 0; })[0] || "";
+      highlighted(p, c.text, q);
+      pass.appendChild(p);
+    });
+    $("passBox").hidden = !(d.chunks && d.chunks.length);
+    var first = res.firstChild; if (first && first.scrollIntoView) first.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  function msg(t, err) { var m = $("msg"); m.textContent = t; m.className = err ? "err" : ""; }
+
+  function ask() {
+    if (busy) return;
+    var docText = $("doc").value;
+    var q = $("q").value.trim();
+    if (!docText.trim()) { msg("Add a document first (paste text, upload a file or use the sample).", true); return; }
+    if (!q) { msg("Type a question first.", true); return; }
+    if (bytes(docText) > MAX_BYTES) docText = clip(docText);
+    var body = JSON.stringify({ question: q, doc_text: docText, models: ["curated", "base"] }), tries = 0;
+    while (bytes(body) > 290000 && tries < 20) {   // server rejects POST bodies over ~300 KB
+      docText = docText.slice(0, Math.floor(docText.length * 0.9)); tries++;
+      body = JSON.stringify({ question: q, doc_text: docText, models: ["curated", "base"] });
+    }
+    busy = true; $("go").disabled = true;
+    msg("Asking both models… (the first call can take a while)");
+    $("res").textContent = ""; $("passBox").hidden = true;
+    fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: body
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.ok) { msg("Error: " + (d.message || d.error), true); return; }
+      msg("");
+      render(d);
+    }).catch(function () {
+      msg("Request failed. Is the server running? Very long documents can also be rejected.", true);
+    }).then(function () { busy = false; $("go").disabled = false; });
+  }
+
+  /* ---------- wiring ---------- */
+  fetch("/api/info").then(function (r) { return r.json(); }).then(function (d) { if (d && d.ok) info = d; }).catch(function () {});
+
+  $("upBtn").onclick = function () { $("file").click(); };
+  $("file").onchange = function () { onFile(this.files && this.files[0]); this.value = ""; };
+  $("sampleBtn").onclick = function () {
+    setDoc(SAMPLE, "Fictional sample");
+    var chips = $("chips"); chips.textContent = "";
+    SAMPLE_Q.forEach(function (t) {
+      var b = el("button", "chip", t); b.type = "button";
+      b.onclick = function () { $("q").value = t; ask(); };
+      chips.appendChild(b);
+    });
+    chips.hidden = false;
+  };
+  $("clearBtn").onclick = function () {
+    $("doc").value = ""; $("q").value = ""; $("res").textContent = ""; $("pass").textContent = "";
+    $("passBox").hidden = true; $("chips").hidden = true; msg(""); updateMeta();
+  };
+  $("doc").addEventListener("input", function () { updateMeta(); });
+  $("go").onclick = ask;
+  $("q").addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); ask(); } });
+  document.addEventListener("dragover", function (e) { e.preventDefault(); });
+  document.addEventListener("drop", function (e) {
+    e.preventDefault();
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) onFile(f);
+  });
+})();
+</script>
+</body>
+</html>

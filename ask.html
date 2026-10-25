@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Govt Document Assistant</title>
+<link rel="stylesheet" href="css/site.css">
+<style>
+.ask-wrap{max-width:980px;margin:0 auto;padding:0 20px 60px}
+.ask-top{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.ask-badge{display:inline-block;font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--code);border:1px solid var(--line);color:var(--muted)}
+.ask-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.ask-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+.ask-wrap textarea,.ask-wrap select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.ask-wrap textarea{min-height:76px;resize:vertical}
+.ask-wrap select{width:auto;max-width:100%}
+.ask-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;background:var(--surface)}
+.ask-chip.off{opacity:.45;cursor:not-allowed}
+.ask-ex{font-size:13.5px;padding:4px 10px;border:1px dashed var(--line);border-radius:999px;background:none;color:var(--muted);cursor:pointer;font-family:inherit}
+.ask-ex:hover{color:var(--ink);border-color:var(--accent)}
+.ask-btn{border:0;font:inherit;cursor:pointer}
+.ask-btn[disabled]{opacity:.6;cursor:wait}
+.ask-res{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:18px}
+.ask-st{display:inline-block;font-size:13px;font-weight:800;padding:3px 10px;border-radius:999px;color:#fff}
+.ask-st.ok{background:var(--fact)}.ask-st.nf{background:var(--warn)}.ask-st.err{background:var(--bad)}
+.ask-ans{margin:10px 0 8px;font-size:16px;white-space:pre-wrap}
+.ask-q{font-size:13.5px;color:var(--muted)}
+.ask-q.bad{color:var(--bad)}
+.ask-pass{margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-size:14.5px;white-space:pre-wrap}
+.ask-pass b{font-size:12.5px;color:var(--muted);display:block;margin-bottom:4px}
+.ask-pass mark{background:color-mix(in srgb,var(--warn) 40%,transparent);color:inherit;border-radius:3px;padding:0 2px}
+.tr{display:flex;width:100%;max-width:560px;margin:0 auto;border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden}
+.tr a{flex:1;display:flex;flex-direction:column;gap:2px;padding:11px 16px;text-decoration:none;color:var(--muted);font-size:15px;font-weight:700;line-height:1.2}
+.tr a small{font-size:11.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;opacity:.85}
+.tr a.on{color:#07101c;background:linear-gradient(90deg,#86e0b3,#8fb0ff)}
+.tr a:not(.on):hover{color:var(--ink)}
+.tr a+a{border-left:1px solid var(--line);text-align:right;align-items:flex-end}
+@media(max-width:480px){.tr a{padding:10px 12px;font-size:14px}}
+h2.ask-h{font-size:20px;margin:26px 0 6px}
+</style>
+</head>
+<body>
+<div class="ask-wrap">
+  <div class="ask-top" style="justify-content:center">
+    <nav class="tr" aria-label="Project tracks">
+      <a class="on" href="/" aria-current="page"><small>LLM Track</small>Govt Document Assistant</a>
+      <a href="verity"><small>Freshers Track</small>Verity &rarr;</a>
+    </nav>
+  </div>
+
+  <h1 style="font-size:36px;margin-bottom:8px">Govt Document Assistant</h1>
+  <p style="font-size:17px;margin:0 0 12px">Ask about government documents in Hindi, Hinglish or English. The answer comes only from the document text, with the exact quoted line, or &ldquo;not found&rdquo; when the document does not say it.</p>
+  <p><span class="ask-badge">Local model: fine-tuned Qwen2.5-3B, served with SGLang</span></p>
+  <p class="fine">Highlighted text is the exact quoted line. This page never calls any cloud AI API.</p>
+
+  <div class="ask-card">
+    <textarea id="q" maxlength="1000" placeholder="Ask in Hindi, Hinglish or English, e.g. RTI application ki fees kya hai?"></textarea>
+    <div class="ask-row">
+      <label class="fine" for="doc">Document</label>
+      <select id="doc"><option value="ALL">All documents</option></select>
+    </div>
+    <div class="ask-row" id="models" aria-label="Models to compare"></div>
+    <div class="ask-row" id="examples"></div>
+    <div class="ask-row">
+      <button class="btn ask-btn" id="go" type="button">Ask</button>
+      <span class="fine" id="msg" role="status"></span>
+    </div>
+  </div>
+
+  <div class="ask-res" id="res"></div>
+  <div id="pass-box" hidden>
+    <h2 class="ask-h">Retrieved passages</h2>
+    <p class="fine">Retrieval is keyword-based (BM25). A wrong passage can cause a wrong &ldquo;not found&rdquo;.</p>
+    <div id="pass"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var EXAMPLES = ["RTI application ki fees kya hai?", "Is scheme me age limit kya hai?", "What is the time limit to reply to an RTI request?"];
+  var info = null, chunks = [];
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function loadInfo() {
+    fetch("/api/info").then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.ok) throw new Error("info failed");
+      info = d;
+      d.docs.forEach(function (x) {
+        var o = el("option", null, x.doc_id + (x.held_out ? "  (not seen during training)" : ""));
+        o.value = x.doc_id;
+        $("doc").appendChild(o);
+      });
+      Object.keys(d.models).forEach(function (k) {
+        var m = d.models[k];
+        if (!m.ready) return;
+        var lab = el("label", "ask-chip" + (m.ready ? "" : " off"));
+        var cb = el("input");
+        cb.type = "checkbox"; cb.value = k; cb.disabled = !m.ready;
+        cb.checked = m.ready && (k === "curated" || k === "base");
+        lab.appendChild(cb);
+        lab.appendChild(document.createTextNode(m.label + (m.ready ? "" : " (not connected)")));
+        $("models").appendChild(lab);
+      });
+    }).catch(function () {
+      $("msg").textContent = "Could not reach the server (/api/info).";
+    });
+    EXAMPLES.forEach(function (t) {
+      var b = el("button", "ask-ex", t);
+      b.type = "button";
+      b.onclick = function () { $("q").value = t; $("q").focus(); };
+      $("examples").appendChild(b);
+    });
+  }
+
+  function highlighted(box, text, quote) {
+    var i = quote ? text.indexOf(quote) : -1;
+    if (i < 0) { box.appendChild(document.createTextNode(text)); return; }
+    box.appendChild(document.createTextNode(text.slice(0, i)));
+    box.appendChild(el("mark", null, quote));
+    box.appendChild(document.createTextNode(text.slice(i + quote.length)));
+  }
+
+  function card(label, r) {
+    var c = el("div", "ask-card");
+    c.appendChild(el("strong", null, label));
+    c.appendChild(document.createTextNode(" "));
+    if (r.error) {
+      var nc = r.error === "not_connected";
+      c.appendChild(el("span", "ask-st err", nc ? "Model not connected" : "Request failed"));
+      c.appendChild(el("p", "ask-q", r.message || r.error));
+      return c;
+    }
+    var found = r.status === "answered";
+    c.appendChild(el("span", "ask-st " + (found ? "ok" : "nf"), found ? "Answered" : "Not found in the document"));
+    c.appendChild(el("p", "ask-ans", r.answer || ""));
+    if (found) {
+      c.appendChild(el("p", "ask-q" + (r.quote_valid ? "" : " bad"),
+        r.quote_valid ? "Quote verified in passage " + (r.source_id || "") : "Quote NOT found in the passages"));
+    }
+    return c;
+  }
+
+  function render(d) {
+    var res = $("res"); res.textContent = "";
+    chunks = d.chunks || [];
+    Object.keys(d.results).forEach(function (k) {
+      res.appendChild(card(info.models[k] ? info.models[k].label : k, d.results[k]));
+    });
+    var quotes = [];
+    Object.keys(d.results).forEach(function (k) {
+      var r = d.results[k];
+      if (r && r.evidence_quote) quotes.push(r.evidence_quote);
+    });
+    var pass = $("pass"); pass.textContent = "";
+    chunks.forEach(function (c) {
+      var p = el("div", "ask-pass");
+      p.appendChild(el("b", null, c.chunk_id + "  ·  " + c.doc_id));
+      var q = quotes.filter(function (x) { return c.text.indexOf(x) >= 0; })[0] || "";
+      highlighted(p, c.text, q);
+      pass.appendChild(p);
+    });
+    $("pass-box").hidden = !chunks.length;
+  }
+
+  $("go").onclick = function () {
+    var q = $("q").value.trim();
+    if (!q) { $("msg").textContent = "Type a question first."; return; }
+    var models = Array.prototype.slice.call(document.querySelectorAll("#models input:checked")).map(function (i) { return i.value; });
+    if (!models.length) { $("msg").textContent = "Select at least one connected model."; return; }
+    $("go").disabled = true; $("msg").textContent = "Thinking… (first call can take a while)";
+    fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: q, doc_id: $("doc").value, models: models })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.ok) { $("msg").textContent = "Error: " + (d.message || d.error); return; }
+      $("msg").textContent = "";
+      render(d);
+    }).catch(function () {
+      $("msg").textContent = "Request failed. Is the server running?";
+    }).then(function () { $("go").disabled = false; });
+  };
+
+  loadInfo();
+})();
+</script>
+</body>
+</html>
